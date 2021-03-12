@@ -1,0 +1,31 @@
+{
+    "name": "oqq/office",
+    "description": "TBD",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric Braun",
+            "email": "eb@oqq.be"
+        }
+    ],
+    "require": {
+        "php": "8.0.*"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "Oqq\\Office\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Oqq\\Office\\Test\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true
+}
