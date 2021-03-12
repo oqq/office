@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        @page {
+            margin: 1.5cm;
+        }
+        body {
+            font-family: helvetica, arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.3;
+        }
+        .large {
+            font-size: 14pt;
+        }
+        .small {
+            font-size: 9pt;
+        }
+        .tiny {
+            font-size: 7pt;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .light {
+            font-weight: lighter;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 5px 0;
+        }
+        td {
+            vertical-align: top;
+            padding: 2px;
+        }
+        tr.bottom-line td, tr.bottom-line th {
+            border-bottom: 1px #515151 solid;
+        }
+        .top-line {
+            border-top: 2px #487c9f solid;
+        }
+        .blue {
+            color: #487c9f;
+        }
+        .grey {
+            color: #515151;
+        }
+        .left {
+            text-align: left;
+        }
+        .right {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bold large blue top-line" style="padding: 5px 0">
+        Ich AG | IT-Beratungen
+    </div>
+
+    <div class="light" style="margin-top: 1.5cm">
+        <table style="width: 40%; float: left;">
+            <tr class="bottom-line">
+                <td class="tiny">
+                    Ich AG | Hauptstraße 2, 01234 Hauptstadt
+                </td>
+            </tr>
+            <tr>
+                <td>Kundenname</td>
+            </tr>
+            <tr>
+                <td>Hauptstraße 1</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>01234 Hauptstadt</td>
+            </tr>
+        </table>
+
+        <table style="width: 40%; float: right;">
+            <tr class="bold small">
+                <td>Rechnungsdatum</td>
+                <td class="right">01.01.2021</td>
+            </tr>
+            <tr>
+                <td>Leistungsdatum</td>
+                <td class="right">Dezember 2020</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>Rechungsnummer</td>
+                <td class="right">20210101</td>
+            </tr>
+            <tr>
+                <td>Kundennummer</td>
+                <td class="right">2021001</td>
+            </tr>
+            <tr>
+                <td>Steuernummer</td>
+                <td class="right">101/102/01234</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="clear: both">&nbsp;</div>
+
+    <div class="bold large" style="margin-top: 3cm">
+        Rechnung 20210101
+    </div>
+
+    <table class="grey">
+        <thead>
+            <tr class="bottom-line">
+                <th class="left">Beschreibung</th>
+                <th class="right" style="width: 3cm;">Menge</th>
+                <th class="right" style="width: 3cm;">Einzelpreis</th>
+                <th class="right" style="width: 3cm;">Gesamt</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bottom-line">
+                <td class="left">Umsetzung Projekt "diverses"</td>
+                <td class="right">10,00&nbsp;h</td>
+                <td class="right">100,00&nbsp;€</td>
+                <td class="right">1.000,00&nbsp;€</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="right">
+                <td></td>
+                <td></td>
+                <td>Netto</td>
+                <td>1.000,00&nbsp;€</td>
+            </tr>
+            <tr class="right">
+                <td></td>
+                <td></td>
+                <td>19,00% USt.</td>
+                <td>190,00&nbsp;€</td>
+            </tr>
+            <tr class="bold right">
+                <td></td>
+                <td></td>
+                <td>Gesamt</td>
+                <td>1.190,00&nbsp;€</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="light" style="margin-top: 3cm">
+        Bitte überweisen Sie den Gesamtbetrag ohne Abzüge <b>innerhalb von 14 Tagen</b><br>
+        auf mein Bankkonto <b>DEXXXXXXXXXXXXXXXXXXXX</b> bei der <b>XYZ Bank</b>.<br>
+        <br>
+        Vielen Dank für Ihren Auftrag.<br>
+        <br>
+        Ich
+    </div>
+
+    <div style="position: absolute; bottom: 1.5cm;">
+        <div class="tiny light top-line">
+            <table style="width: 32%; float: left; text-align: left;">
+                <tr>
+                    <td>Ich AG | IT-Beratungen</td>
+                </tr>
+                <tr>
+                    <td>Hauptstraße 2</td>
+                </tr>
+                <tr>
+                    <td>01234 Hauptstadt</td>
+                </tr>
+            </table>
+
+            <table style="width: 32%; float: left; text-align: center;">
+                <tr>
+                    <td>+49 123 12345678</td>
+                </tr>
+                <tr>
+                    <td>info@ich.ag</td>
+                </tr>
+            </table>
+
+            <table style="width: 32%; float: right; text-align: right;">
+                <tr>
+                    <td>XYZ Bank</td>
+                </tr>
+                <tr>
+                    <td>DEXXXXXXXXXXXXXXXXXXXX</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
