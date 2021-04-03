@@ -10,10 +10,15 @@
     ],
     "require": {
         "php": "8.0.*",
-        "dompdf/dompdf": "^1.0"
+        "dompdf/dompdf": "^1.0",
+        "webmozart/assert": "^1.10"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest"
+        "infection/infection": "^0.21.5",
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.15.1",
+        "roave/security-advisories": "dev-latest",
+        "vimeo/psalm": "^4.7"
     },
     "autoload": {
         "psr-4": {
@@ -22,7 +27,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Oqq\\Office\\Test\\": "tests/"
+            "Oqq\\Office\\Test\\": "tests/unit"
         }
     },
     "config": {
