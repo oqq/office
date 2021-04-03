@@ -10,6 +10,7 @@
     ],
     "require": {
         "php": "8.0.*",
+        "ext-json": "*",
         "dompdf/dompdf": "^1.0",
         "webmozart/assert": "^1.10"
     },
