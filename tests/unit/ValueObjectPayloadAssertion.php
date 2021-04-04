@@ -44,6 +44,22 @@ final class ValueObjectPayloadAssertion
     /**
      * @return iterable<array-key, array{0: \Exception, 1: array}>
      */
+    public static function integer(array $perfectValues, string $key): iterable
+    {
+        yield 'missing value for ' . $key => [
+            new InvalidArgumentException('Expected the key "' . $key . '" to exist'),
+            self::removeKey($perfectValues, $key),
+        ];
+
+        yield 'invalid type for ' . $key => [
+            new InvalidArgumentException('Expected an integer. Got: string'),
+            self::replaceKey($perfectValues, $key, '5'),
+        ];
+    }
+
+    /**
+     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     */
     public static function positiveInteger(array $perfectValues, string $key): iterable
     {
         yield 'missing value for ' . $key => [
