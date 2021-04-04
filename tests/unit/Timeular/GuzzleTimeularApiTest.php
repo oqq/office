@@ -73,6 +73,9 @@ final class GuzzleTimeularApiTest extends TestCase
         $this->timeularApi->getActivities();
     }
 
+    /**
+     * @return iterable<string, array{0: \Exception, 1: array}>
+     */
     public function invalidActivitiesResponseProvider(): iterable
     {
         yield 'missing activities key' => [
@@ -137,6 +140,9 @@ final class GuzzleTimeularApiTest extends TestCase
         );
     }
 
+    /**
+     * @return iterable<string, array{0: \Exception, 1: array}>
+     */
     public function invalidTimeEntriesResponseProvider(): iterable
     {
         yield 'missing time entries key' => [

@@ -40,7 +40,7 @@ final class IssueKeys implements IteratorAggregate
     }
 
     /**
-     * @return Generator<array-key, IssueKey, mixed, void>
+     * @return Generator<IssueKey>
      */
     public function getIterator(): Generator
     {

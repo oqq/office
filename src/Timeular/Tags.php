@@ -29,7 +29,7 @@ final class Tags implements IteratorAggregate
     }
 
     /**
-     * @return Generator<array-key, Tag, mixed, void>
+     * @return Generator<Tag>
      */
     public function getIterator(): Generator
     {

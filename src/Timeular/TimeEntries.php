@@ -41,7 +41,7 @@ final class TimeEntries implements IteratorAggregate
     }
 
     /**
-     * @return Generator<array-key, TimeEntry, mixed, void>
+     * @return Generator<TimeEntry>
      */
     public function getIterator(): Generator
     {

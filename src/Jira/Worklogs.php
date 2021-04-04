@@ -9,7 +9,7 @@ use IteratorAggregate;
 use Oqq\Office\Util\Assert;
 
 /**
- * @implements IteratorAggregate<Worklogs>
+ * @implements IteratorAggregate<Worklog>
  */
 final class Worklogs implements IteratorAggregate
 {
@@ -29,7 +29,7 @@ final class Worklogs implements IteratorAggregate
     }
 
     /**
-     * @return Generator<array-key, Worklog, mixed, void>
+     * @return Generator<Worklog>
      */
     public function getIterator(): Generator
     {

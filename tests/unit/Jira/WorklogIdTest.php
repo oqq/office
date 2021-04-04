@@ -25,7 +25,7 @@ final class WorklogIdTest extends TestCase
     }
 
     /**
-     * @return iterable<array-key, array<int>>
+     * @return iterable<array-key, array{0: int}>
      */
     public function validValueProvider(): iterable
     {

@@ -42,7 +42,7 @@ final class Activities implements IteratorAggregate
     }
 
     /**
-     * @return Generator<array-key, Activity, mixed, void>
+     * @return Generator<Activity>
      */
     public function getIterator(): Generator
     {

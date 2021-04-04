@@ -33,7 +33,7 @@ final class IssueTest extends TestCase
     }
 
     /**
-     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: \Exception, 1: array}>
      */
     public function invalidPayloadProvider(): iterable
     {

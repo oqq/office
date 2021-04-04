@@ -27,7 +27,7 @@ final class TagsTest extends TestCase
     }
 
     /**
-     * @return iterable<array-key, array<array>>
+     * @return iterable<array-key, array{0: array}>
      */
     public function validPayloadProvider(): iterable
     {
@@ -60,7 +60,7 @@ final class TagsTest extends TestCase
     }
 
     /**
-     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: \Exception, 1: array}>
      */
     public function invalidPayloadProvider(): iterable
     {

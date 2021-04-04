@@ -13,7 +13,7 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: \Exception, 1: array}>
      */
     public static function string(array $perfectValues, string $key): iterable
     {
@@ -29,7 +29,7 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: \Exception, 1: array}>
      */
     public static function nonEmptyString(array $perfectValues, string $key): iterable
     {
@@ -42,7 +42,7 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: \Exception, 1: array}>
      */
     public static function integer(array $perfectValues, string $key): iterable
     {
@@ -58,7 +58,7 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: \Exception, 1: array}>
      */
     public static function positiveInteger(array $perfectValues, string $key): iterable
     {
@@ -84,7 +84,7 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: \Exception, 1: array}>
      */
     public static function array(array $perfectValues, string $key): iterable
     {
@@ -100,7 +100,7 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: \Exception, 1: array}>
      */
     public static function stringList(array $perfectValues, string $key): iterable
     {
@@ -121,7 +121,7 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: \Exception, 1: array}>
      */
     public static function arrayList(array $perfectValues, string $key): iterable
     {
@@ -142,7 +142,7 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<array-key, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: \Exception, 1: array}>
      */
     public static function map(array $perfectValues, string $key): iterable
     {
@@ -162,10 +162,7 @@ final class ValueObjectPayloadAssertion
         return \array_diff_key($values, [$key => true]);
     }
 
-    /**
-     * @param mixed $newValue
-     */
-    private static function replaceKey(array $values, string $key, $newValue): array
+    private static function replaceKey(array $values, string $key, mixed $newValue): array
     {
         return \array_merge($values, [$key => $newValue]);
     }

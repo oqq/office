@@ -24,6 +24,9 @@ final class IssueKeyTest extends TestCase
         Assert::assertSame($valueExample, $valueObject->toString());
     }
 
+    /**
+     * @return iterable<array-key, array{0: string}>
+     */
     public function validValueProvider(): iterable
     {
         yield ['T-1'];
