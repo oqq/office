@@ -9,7 +9,6 @@ use Oqq\Office\Exception\InvalidArgumentException;
 use Oqq\Office\Jira\GuzzleJiraApi;
 use Oqq\Office\Jira\IssueKey;
 use Oqq\Office\Jira\IssueKeys;
-use Oqq\Office\Jira\Worklog;
 use Oqq\Office\Jira\WorklogId;
 use Oqq\Office\Util\DateTime;
 use PHPUnit\Framework\Assert;
@@ -68,7 +67,7 @@ final class GuzzleJiraApiTest extends TestCase
         $issues = $this->jiraApi->getIssues(
             IssueKeys::fromArray([
                 'TEST-1',
-                'TEST-10'
+                'TEST-10',
             ])
         );
 
@@ -175,28 +174,36 @@ final class GuzzleJiraApiTest extends TestCase
         );
     }
 
-    private function createRecursiveSearchArgument(string | int $searchedValue): TokenInterface
+    private function createRecursiveSearchArgument(string $searchedValue): TokenInterface
     {
-        $searchRecursive = function (mixed $value) use (&$searchRecursive, $searchedValue): bool {
-            if ($value === $searchedValue) {
+        return Argument::allOf(
+            Argument::type('iterable'),
+            Argument::that(
+                /** @param iterable<int|string|iterable<int|string>> $value */
+                static fn (iterable $value): bool => self::searchRecursiveValue($value, $searchedValue)
+            ),
+        );
+    }
+
+    /**
+     * @param iterable<int|string|iterable<int|string>> $value
+     */
+    private static function searchRecursiveValue(iterable $value, string $searchedValue): bool
+    {
+        foreach ($value as $item) {
+            if ($item === $searchedValue) {
                 return true;
             }
 
-            if (\is_string($value) && \str_contains($value, (string) $searchedValue)) {
+            if (\is_string($item) && \str_contains($item, $searchedValue)) {
                 return true;
             }
 
-            if (\is_iterable($value)) {
-                foreach ($value as $item) {
-                    if (true === $searchRecursive($item)) {
-                        return true;
-                    }
-                }
+            if (\is_iterable($item) && self::searchRecursiveValue($item, $searchedValue)) {
+                return true;
             }
+        }
 
-            return false;
-        };
-
-        return Argument::that($searchRecursive);
+        return false;
     }
 }

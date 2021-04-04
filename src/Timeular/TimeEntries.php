@@ -6,7 +6,6 @@ namespace Oqq\Office\Timeular;
 
 use Generator;
 use IteratorAggregate;
-use Traversable;
 use Oqq\Office\Util\Assert;
 
 /**

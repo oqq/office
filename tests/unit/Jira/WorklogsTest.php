@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Oqq\Office\Test\Jira;
 
 use Oqq\Office\Exception\InvalidArgumentException;
-use Oqq\Office\Jira\Issue;
 use Oqq\Office\Jira\Worklog;
 use Oqq\Office\Jira\Worklogs;
 use PHPUnit\Framework\Assert;

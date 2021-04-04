@@ -6,8 +6,6 @@ namespace Oqq\Office\Test\Timeular;
 
 final class PayloadExample
 {
-    private function __construct() {}
-
     public static function activity(): array
     {
         return [

@@ -51,6 +51,7 @@ final class GuzzleTimeularApiTest extends TestCase
         $response = $this->prophesize(ResponseInterface::class);
         $response->getBody()->willReturn($body);
 
+        /** @noinspection PhpParamsInspection */
         $this->client->request(Argument::cetera())->willReturn($response);
 
         $activities = $this->timeularApi->getActivities();
@@ -68,6 +69,7 @@ final class GuzzleTimeularApiTest extends TestCase
         $response = $this->prophesize(ResponseInterface::class);
         $response->getBody()->willReturn(\json_encode($responsePayload, \JSON_THROW_ON_ERROR));
 
+        /** @noinspection PhpParamsInspection */
         $this->client->request(Argument::cetera())->willReturn($response);
 
         $this->timeularApi->getActivities();
@@ -132,6 +134,7 @@ final class GuzzleTimeularApiTest extends TestCase
         $response = $this->prophesize(ResponseInterface::class);
         $response->getBody()->willReturn(\json_encode($responsePayload, \JSON_THROW_ON_ERROR));
 
+        /** @noinspection PhpParamsInspection */
         $this->client->request(Argument::cetera())->willReturn($response);
 
         $this->timeularApi->getTimeEntries(

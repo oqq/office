@@ -7,7 +7,6 @@ namespace Oqq\Office\Test\Timeular;
 use Oqq\Office\Exception\InvalidArgumentException;
 use Oqq\Office\Exception\RuntimeException;
 use Oqq\Office\Timeular\Activity;
-use Oqq\Office\Timeular\Tag;
 use Oqq\Office\Timeular\Activities;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;

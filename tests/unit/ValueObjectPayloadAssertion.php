@@ -8,10 +8,6 @@ use Oqq\Office\Exception\InvalidArgumentException;
 
 final class ValueObjectPayloadAssertion
 {
-    private function __construct()
-    {
-    }
-
     /**
      * @return iterable<string, array{0: \Exception, 1: array}>
      */
@@ -96,64 +92,6 @@ final class ValueObjectPayloadAssertion
         yield 'invalid type for ' . $key . ' value' => [
             new InvalidArgumentException('Expected an array. Got: integer'),
             self::replaceKey($perfectValues, $key, 5),
-        ];
-    }
-
-    /**
-     * @return iterable<string, array{0: \Exception, 1: array}>
-     */
-    public static function stringList(array $perfectValues, string $key): iterable
-    {
-        yield 'missing value for ' . $key => [
-            new InvalidArgumentException('Expected the key "' . $key . '" to exist'),
-            self::removeKey($perfectValues, $key),
-        ];
-
-        yield 'invalid type for ' . $key => [
-            new InvalidArgumentException('Expected list - non-associative array'),
-            self::replaceKey($perfectValues, $key, ['alpha' => 1]),
-        ];
-
-        yield 'invalid type for ' . $key . ' value' => [
-            new InvalidArgumentException('Expected a string. Got: integer'),
-            self::replaceKey($perfectValues, $key, [5]),
-        ];
-    }
-
-    /**
-     * @return iterable<string, array{0: \Exception, 1: array}>
-     */
-    public static function arrayList(array $perfectValues, string $key): iterable
-    {
-        yield 'missing value for ' . $key => [
-            new InvalidArgumentException('Expected the key "' . $key . '" to exist'),
-            self::removeKey($perfectValues, $key),
-        ];
-
-        yield 'invalid type for ' . $key => [
-            new InvalidArgumentException('Expected list - non-associative array'),
-            self::replaceKey($perfectValues, $key, ['alpha' => 1]),
-        ];
-
-        yield 'invalid type for ' . $key . ' value' => [
-            new InvalidArgumentException('Expected an array. Got: integer'),
-            self::replaceKey($perfectValues, $key, [5]),
-        ];
-    }
-
-    /**
-     * @return iterable<string, array{0: \Exception, 1: array}>
-     */
-    public static function map(array $perfectValues, string $key): iterable
-    {
-        yield 'missing value for ' . $key => [
-            new InvalidArgumentException('Expected the key "' . $key . '" to exist'),
-            self::removeKey($perfectValues, $key),
-        ];
-
-        yield 'invalid type for ' . $key => [
-            new InvalidArgumentException('Expected map - associative array'),
-            self::replaceKey($perfectValues, $key, [5]),
         ];
     }
 
