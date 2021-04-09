@@ -1,0 +1,80 @@
+name: "Quality Assurence"
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  static-analysis:
+    name: "Static Analysis"
+    runs-on: "ubuntu-latest"
+
+    strategy:
+      matrix:
+        php-version:
+          - "8.0"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+        with:
+          fetch-depth: 2
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          coverage: none
+          ini-values: memory_limit=-1
+          tools: composer:v2
+
+      - name: "Cache dependencies"
+        uses: "actions/cache@v2"
+        with:
+          path: "~/.composer/cache"
+          key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-"
+
+      - name: "Install dependencies"
+        run: "composer install --prefer-dist --no-interaction --no-progress"
+
+      - name: "Run Psalm"
+        run: "vendor/bin/psalm --output-format=github --shepherd"
+
+  mutation-tests:
+    name: "Mutation Tests"
+    runs-on: "ubuntu-latest"
+
+    strategy:
+      matrix:
+        php-version:
+          - "8.0"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+        with:
+          fetch-depth: 2
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          coverage: pcov
+          ini-values: memory_limit=-1
+          tools: composer:v2
+
+      - name: "Cache dependencies"
+        uses: "actions/cache@v2"
+        with:
+          path: "~/.composer/cache"
+          key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-"
+
+      - name: "Install dependencies"
+        run: "composer install --prefer-dist --no-interaction --no-progress"
+
+      - name: "Run Infection"
+        run: "vendor/bin/infection"
+        env:
+          INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
