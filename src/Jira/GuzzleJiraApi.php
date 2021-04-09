@@ -35,12 +35,12 @@ final class GuzzleJiraApi implements JiraApi
         return Issues::fromArray($result['issues']);
     }
 
-    public function getWorklogs(string $worker, DateTimeInterface $from, DateTimeInterface $to): Worklogs
+    public function getWorklogs(JiraUser $jiraUser, DateTimeInterface $from, DateTimeInterface $to): Worklogs
     {
         $response = $this->client->request('POST','/rest/tempo-timesheets/4/worklogs/search', [
             'json' => [
                 'worker' => [
-                    $worker,
+                    $jiraUser->toString(),
                 ],
                 'from' => $from->format('Y-m-d'),
                 'to' => $to->format('Y-m-d'),
@@ -57,11 +57,11 @@ final class GuzzleJiraApi implements JiraApi
         $this->client->request('DELETE', '/rest/tempo-timesheets/4/worklogs/' . $worklogId->toString());
     }
 
-    public function createWorklog(string $worker, string $comment, IssueKey $issueKey, DateTimeInterface $started, int $timeSpentSeconds): void
+    public function createWorklog(JiraUser $jiraUser, string $comment, IssueKey $issueKey, DateTimeInterface $started, int $timeSpentSeconds): void
     {
         $this->client->request('POST','/rest/tempo-timesheets/4/worklogs', [
             'json' => [
-                'worker' => $worker,
+                'worker' => $jiraUser->toString(),
                 'originTaskId' => $issueKey->toString(),
                 'started' => $started->format('Y-m-d'),
                 'timeSpentSeconds' => $timeSpentSeconds,

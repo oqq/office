@@ -9,6 +9,7 @@ use Oqq\Office\Exception\InvalidArgumentException;
 use Oqq\Office\Jira\GuzzleJiraApi;
 use Oqq\Office\Jira\IssueKey;
 use Oqq\Office\Jira\IssueKeys;
+use Oqq\Office\Jira\JiraUser;
 use Oqq\Office\Jira\WorklogId;
 use Oqq\Office\Util\DateTime;
 use PHPUnit\Framework\Assert;
@@ -133,7 +134,7 @@ final class GuzzleJiraApiTest extends TestCase
         )->willReturn($response);
 
         $worklogs = $this->jiraApi->getWorklogs(
-            'some',
+            JiraUser::fromString('some'),
             DateTime::fromString('2021-01-01', 'Y-m-d'),
             DateTime::fromString('2021-01-31', 'Y-m-d'),
         );
@@ -166,7 +167,7 @@ final class GuzzleJiraApiTest extends TestCase
         )->shouldBeCalledOnce();
 
         $this->jiraApi->createWorklog(
-            'some',
+            JiraUser::fromString('some'),
             'test',
             IssueKey::fromString('TEST-1'),
             DateTime::fromString('2021-01-01', 'Y-m-d'),

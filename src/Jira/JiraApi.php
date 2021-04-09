@@ -10,9 +10,9 @@ interface JiraApi
 {
     public function getIssues(IssueKeys $issueKeys): Issues;
 
-    public function getWorklogs(string $worker, DateTimeInterface $from, DateTimeInterface $to): Worklogs;
+    public function getWorklogs(JiraUser $jiraUser, DateTimeInterface $from, DateTimeInterface $to): Worklogs;
 
     public function deleteWorkLog(WorklogId $worklogId): void;
 
-    public function createWorklog(string $worker, string $comment, IssueKey $issueKey, DateTimeInterface $started, int $timeSpentSeconds): void;
+    public function createWorklog(JiraUser $jiraUser, string $comment, IssueKey $issueKey, DateTimeInterface $started, int $timeSpentSeconds): void;
 }
