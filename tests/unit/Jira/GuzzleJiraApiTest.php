@@ -10,6 +10,7 @@ use Oqq\Office\Jira\GuzzleJiraApi;
 use Oqq\Office\Jira\IssueKey;
 use Oqq\Office\Jira\IssueKeys;
 use Oqq\Office\Jira\JiraUser;
+use Oqq\Office\Jira\TimeSpent;
 use Oqq\Office\Jira\WorklogId;
 use Oqq\Office\Util\DateTime;
 use PHPUnit\Framework\Assert;
@@ -163,6 +164,7 @@ final class GuzzleJiraApiTest extends TestCase
                 $this->createRecursiveSearchArgument('test'),
                 $this->createRecursiveSearchArgument('TEST-1'),
                 $this->createRecursiveSearchArgument('2021-01-01'),
+                $this->createRecursiveSearchArgument(3600),
             )
         )->shouldBeCalledOnce();
 
@@ -171,11 +173,11 @@ final class GuzzleJiraApiTest extends TestCase
             'test',
             IssueKey::fromString('TEST-1'),
             DateTime::fromString('2021-01-01', 'Y-m-d'),
-            60
+            TimeSpent::fromSeconds(3600)
         );
     }
 
-    private function createRecursiveSearchArgument(string $searchedValue): TokenInterface
+    private function createRecursiveSearchArgument(int | string $searchedValue): TokenInterface
     {
         return Argument::allOf(
             Argument::type('iterable'),
@@ -189,14 +191,14 @@ final class GuzzleJiraApiTest extends TestCase
     /**
      * @param iterable<int|string|iterable<int|string>> $value
      */
-    private static function searchRecursiveValue(iterable $value, string $searchedValue): bool
+    private static function searchRecursiveValue(iterable $value, int | string $searchedValue): bool
     {
         foreach ($value as $item) {
             if ($item === $searchedValue) {
                 return true;
             }
 
-            if (\is_string($item) && \str_contains($item, $searchedValue)) {
+            if (\is_string($item) && \is_string($searchedValue) && \str_contains($item, $searchedValue)) {
                 return true;
             }
 

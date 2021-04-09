@@ -21,11 +21,15 @@ final class GuzzleJiraApi implements JiraApi
 
     public function getIssues(IssueKeys $issueKeys): Issues
     {
-        $response = $this->client->request('POST','/rest/api/2/search', [
-            'json' => [
-                'jql' => \sprintf('key IN (%s)', \implode(', ', $issueKeys->toArray())),
-            ],
-        ]);
+        $response = $this->client->request(
+            'POST',
+            '/rest/api/2/search',
+            [
+                'json' => [
+                    'jql' => \sprintf('key IN (%s)', \implode(', ', $issueKeys->toArray())),
+                ],
+            ]
+        );
 
         $result = $this->decodeResponse($response);
 
@@ -37,15 +41,19 @@ final class GuzzleJiraApi implements JiraApi
 
     public function getWorklogs(JiraUser $jiraUser, DateTimeInterface $from, DateTimeInterface $to): Worklogs
     {
-        $response = $this->client->request('POST','/rest/tempo-timesheets/4/worklogs/search', [
-            'json' => [
-                'worker' => [
-                    $jiraUser->toString(),
+        $response = $this->client->request(
+            'POST',
+            '/rest/tempo-timesheets/4/worklogs/search',
+            [
+                'json' => [
+                    'worker' => [
+                        $jiraUser->toString(),
+                    ],
+                    'from' => $from->format('Y-m-d'),
+                    'to' => $to->format('Y-m-d'),
                 ],
-                'from' => $from->format('Y-m-d'),
-                'to' => $to->format('Y-m-d'),
-            ],
-        ]);
+            ]
+        );
 
         $result = $this->decodeResponse($response);
 
@@ -57,21 +65,30 @@ final class GuzzleJiraApi implements JiraApi
         $this->client->request('DELETE', '/rest/tempo-timesheets/4/worklogs/' . $worklogId->toString());
     }
 
-    public function createWorklog(JiraUser $jiraUser, string $comment, IssueKey $issueKey, DateTimeInterface $started, int $timeSpentSeconds): void
-    {
-        $this->client->request('POST','/rest/tempo-timesheets/4/worklogs', [
-            'json' => [
-                'worker' => $jiraUser->toString(),
-                'originTaskId' => $issueKey->toString(),
-                'started' => $started->format('Y-m-d'),
-                'timeSpentSeconds' => $timeSpentSeconds,
-                'comment' => $comment,
-            ],
-        ]);
+    public function createWorklog(
+        JiraUser $jiraUser,
+        string $comment,
+        IssueKey $issueKey,
+        DateTimeInterface $started,
+        TimeSpent $timeSpent
+    ): void {
+        $this->client->request(
+            'POST',
+            '/rest/tempo-timesheets/4/worklogs',
+            [
+                'json' => [
+                    'worker' => $jiraUser->toString(),
+                    'originTaskId' => $issueKey->toString(),
+                    'started' => $started->format('Y-m-d'),
+                    'timeSpentSeconds' => $timeSpent->seconds(),
+                    'comment' => $comment,
+                ],
+            ]
+        );
     }
 
     private function decodeResponse(ResponseInterface $response): array
     {
-        return Json::decode((string) $response->getBody());
+        return Json::decode((string)$response->getBody());
     }
 }

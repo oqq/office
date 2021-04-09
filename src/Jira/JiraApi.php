@@ -14,5 +14,11 @@ interface JiraApi
 
     public function deleteWorkLog(WorklogId $worklogId): void;
 
-    public function createWorklog(JiraUser $jiraUser, string $comment, IssueKey $issueKey, DateTimeInterface $started, int $timeSpentSeconds): void;
+    public function createWorklog(
+        JiraUser $jiraUser,
+        string $comment,
+        IssueKey $issueKey,
+        DateTimeInterface $started,
+        TimeSpent $timeSpent
+    ): void;
 }
