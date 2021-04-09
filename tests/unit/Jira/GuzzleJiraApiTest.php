@@ -6,6 +6,7 @@ namespace Oqq\Office\Test\Jira;
 
 use GuzzleHttp\ClientInterface;
 use Oqq\Office\Exception\InvalidArgumentException;
+use Oqq\Office\Jira\Comment;
 use Oqq\Office\Jira\GuzzleJiraApi;
 use Oqq\Office\Jira\IssueKey;
 use Oqq\Office\Jira\IssueKeys;
@@ -170,7 +171,7 @@ final class GuzzleJiraApiTest extends TestCase
 
         $this->jiraApi->createWorklog(
             JiraUser::fromString('some'),
-            'test',
+            Comment::fromString('test'),
             IssueKey::fromString('TEST-1'),
             DateTime::fromString('2021-01-01', 'Y-m-d'),
             TimeSpent::fromSeconds(3600)

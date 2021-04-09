@@ -16,7 +16,7 @@ interface JiraApi
 
     public function createWorklog(
         JiraUser $jiraUser,
-        string $comment,
+        Comment $comment,
         IssueKey $issueKey,
         DateTimeInterface $started,
         TimeSpent $timeSpent

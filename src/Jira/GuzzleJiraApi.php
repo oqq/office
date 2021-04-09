@@ -67,7 +67,7 @@ final class GuzzleJiraApi implements JiraApi
 
     public function createWorklog(
         JiraUser $jiraUser,
-        string $comment,
+        Comment $comment,
         IssueKey $issueKey,
         DateTimeInterface $started,
         TimeSpent $timeSpent
@@ -81,7 +81,7 @@ final class GuzzleJiraApi implements JiraApi
                     'originTaskId' => $issueKey->toString(),
                     'started' => $started->format('Y-m-d'),
                     'timeSpentSeconds' => $timeSpent->seconds(),
-                    'comment' => $comment,
+                    'comment' => $comment->toString(),
                 ],
             ]
         );
