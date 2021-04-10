@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Test\Jira;
+namespace Oqq\Office\Test\Jira\Api;
 
 use Oqq\Office\Exception\InvalidArgumentException;
-use Oqq\Office\Jira\IssueKey;
+use Oqq\Office\Jira\Api\IssueId;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Oqq\Office\Jira\IssueKey
+ * @covers \Oqq\Office\Jira\Api\IssueId
  */
-final class IssueKeyTest extends TestCase
+final class IssueIdTest extends TestCase
 {
     /**
      * @dataProvider validValueProvider
      */
     public function testItWillCreateFromPerfectValue(string $valueExample): void
     {
-        $valueObject = IssueKey::fromString($valueExample);
+        $valueObject = IssueId::fromString($valueExample);
 
-        Assert::assertSame($valueExample, $valueObject->toString());
+        Assert::assertSame($valueExample, $valueObject->value());
     }
 
     /**
@@ -29,16 +29,16 @@ final class IssueKeyTest extends TestCase
      */
     public function validValueProvider(): iterable
     {
-        yield ['T-1'];
-        yield ['TEST-1000'];
-        yield ['TEEEEEEEST-999999'];
+        yield ['1'];
+        yield ['2'];
+        yield ['100'];
     }
 
     public function testItThrowsWithInvalidPayload(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The value "invalid" does not match the expected pattern');
+        $this->expectExceptionMessage('Expected a non-empty value. Got: ""');
 
-        IssueKey::fromString('invalid');
+        IssueId::fromString('');
     }
 }

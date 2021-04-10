@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Jira;
+namespace Oqq\Office\Jira\Tempo;
 
 use Oqq\Office\Util\Assert;
 

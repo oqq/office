@@ -2,41 +2,42 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Jira;
+namespace Oqq\Office\Jira\Tempo;
 
 use Generator;
 use IteratorAggregate;
+use Oqq\Office\Jira\Tempo\Worklog;
 use Oqq\Office\Util\Assert;
 
 /**
- * @implements IteratorAggregate<Issue>
+ * @implements IteratorAggregate<Worklog>
  */
-final class Issues implements IteratorAggregate
+final class Worklogs implements IteratorAggregate
 {
-    /** @var array<Issue> */
+    /** @var array<Worklog> */
     private array $values;
 
     public static function fromArray(array $values): self
     {
         Assert::allIsArray($values);
 
-        $issues = \array_map(
-            static fn (array $issue): Issue => Issue::fromArray($issue),
+        $worklogs = \array_map(
+            static fn (array $worklog): Worklog => Worklog::fromArray($worklog),
             $values,
         );
 
-        return new self(...$issues);
+        return new self(...$worklogs);
     }
 
     /**
-     * @return Generator<Issue>
+     * @return Generator<Worklog>
      */
     public function getIterator(): Generator
     {
         yield from $this->values;
     }
 
-    private function __construct(Issue ...$values)
+    private function __construct(Worklog ...$values)
     {
         $this->values = $values;
     }

@@ -2,21 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Test\Jira;
+namespace Oqq\Office\Test\Jira\Api;
 
-use Oqq\Office\Jira\Issue;
+use Oqq\Office\Jira\Api\Issue;
 use Oqq\Office\Test\ValueObjectPayloadAssertion;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Oqq\Office\Jira\Issue
+ * @covers \Oqq\Office\Jira\Api\Issue
  */
 final class IssueTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
         $valueObject = Issue::fromArray([
+            'id' => '1',
             'key' =>  PayloadExample::issueKey(),
         ]);
 
@@ -38,9 +39,11 @@ final class IssueTest extends TestCase
     public function invalidPayloadProvider(): iterable
     {
         $perfectValues = [
+            'id' => '1',
             'key' =>  PayloadExample::issueKey(),
         ];
 
+        yield from ValueObjectPayloadAssertion::string($perfectValues, 'id');
         yield from ValueObjectPayloadAssertion::string($perfectValues, 'key');
     }
 }

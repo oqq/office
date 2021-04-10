@@ -2,14 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Jira;
+namespace Oqq\Office\Jira\Api;
 
-final class Comment
+use Oqq\Office\Util\Assert;
+
+final class IssueKey
 {
+    public const PATTERN = '/^[A-Z]{1,10}-\d+$/';
+
     private string $value;
 
     public static function fromString(string $value): self
     {
+        Assert::regex($value, self::PATTERN);
+
         return new self($value);
     }
 

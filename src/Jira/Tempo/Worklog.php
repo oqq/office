@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Jira;
+namespace Oqq\Office\Jira\Tempo;
 
 use DateTimeImmutable;
 use Oqq\Office\Util\Assert;
@@ -13,7 +13,8 @@ final class Worklog
     private WorklogId $worklogId;
     private Issue $issue;
     private DateTimeImmutable $started;
-    private int $timeSpentSeconds;
+    private TimeSpentSeconds $timeSpentSeconds;
+    private Comment $comment;
 
     public static function fromArray(array $values): self
     {
@@ -27,13 +28,18 @@ final class Worklog
         Assert::string($values['started']);
 
         Assert::keyExists($values, 'timeSpentSeconds');
-        Assert::positiveInteger($values['timeSpentSeconds']);
+        Assert::integer($values['timeSpentSeconds']);
+
+        Assert::keyExists($values, 'comment');
+        Assert::string($values['comment']);
 
         $worklogId = WorklogId::fromInt($values['tempoWorklogId']);
         $issue = Issue::fromArray($values['issue']);
         $started = DateTime::fromString($values['started'], 'Y-m-d|+');
-        
-        return new self($worklogId, $issue, $started, $values['timeSpentSeconds']);
+        $timeSpentSeconds = TimeSpentSeconds::fromInteger($values['timeSpentSeconds']);
+        $comment = Comment::fromString($values['comment']);
+
+        return new self($worklogId, $issue, $started, $timeSpentSeconds, $comment);
     }
 
     public function worklogId(): WorklogId
@@ -51,11 +57,27 @@ final class Worklog
         return $this->started;
     }
 
-    private function __construct(WorklogId $worklogId, Issue $issue, DateTimeImmutable $started, int $timeSpentSeconds)
+    public function timeSpentSeconds(): TimeSpentSeconds
     {
+        return $this->timeSpentSeconds;
+    }
+
+    public function comment(): Comment
+    {
+        return $this->comment;
+    }
+
+    private function __construct(
+        WorklogId $worklogId,
+        Issue $issue,
+        DateTimeImmutable $started,
+        TimeSpentSeconds $timeSpentSeconds,
+        Comment $comment
+    ) {
         $this->worklogId = $worklogId;
         $this->issue = $issue;
         $this->started = $started;
         $this->timeSpentSeconds = $timeSpentSeconds;
+        $this->comment = $comment;
     }
 }

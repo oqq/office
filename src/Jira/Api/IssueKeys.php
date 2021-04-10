@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Jira;
+namespace Oqq\Office\Jira\Api;
 
 use Generator;
 use IteratorAggregate;
+use Oqq\Office\Jira\Api\IssueKey;
 use Oqq\Office\Util\Assert;
 
 /**

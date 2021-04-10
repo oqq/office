@@ -6,6 +6,13 @@ namespace Oqq\Office\Jira;
 
 use DateTimeInterface;
 use GuzzleHttp\ClientInterface;
+use Oqq\Office\Jira\Tempo\IssueKey;
+use Oqq\Office\Jira\Api\IssueKeys;
+use Oqq\Office\Jira\Api\Issues;
+use Oqq\Office\Jira\Tempo\Comment;
+use Oqq\Office\Jira\Tempo\TimeSpentSeconds;
+use Oqq\Office\Jira\Tempo\WorklogId;
+use Oqq\Office\Jira\Tempo\Worklogs;
 use Oqq\Office\Util\Assert;
 use Oqq\Office\Util\Json;
 use Psr\Http\Message\ResponseInterface;
@@ -65,13 +72,8 @@ final class GuzzleJiraApi implements JiraApi
         $this->client->request('DELETE', '/rest/tempo-timesheets/4/worklogs/' . $worklogId->toString());
     }
 
-    public function createWorklog(
-        JiraUser $jiraUser,
-        Comment $comment,
-        IssueKey $issueKey,
-        DateTimeInterface $started,
-        TimeSpent $timeSpent
-    ): void {
+    public function createWorklog(JiraUser $jiraUser, IssueKey $issueKey, DateTimeInterface $started, TimeSpentSeconds $timeSpent, Comment $comment): void
+    {
         $this->client->request(
             'POST',
             '/rest/tempo-timesheets/4/worklogs',
@@ -80,7 +82,7 @@ final class GuzzleJiraApi implements JiraApi
                     'worker' => $jiraUser->toString(),
                     'originTaskId' => $issueKey->toString(),
                     'started' => $started->format('Y-m-d'),
-                    'timeSpentSeconds' => $timeSpent->seconds(),
+                    'timeSpentSeconds' => $timeSpent->value(),
                     'comment' => $comment->toString(),
                 ],
             ]

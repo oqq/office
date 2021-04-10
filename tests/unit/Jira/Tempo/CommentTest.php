@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Test\Jira;
+namespace Oqq\Office\Test\Jira\Tempo;
 
-use Oqq\Office\Jira\Comment;
+use Oqq\Office\Jira\Tempo\Comment;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Oqq\Office\Jira\Comment
+ * @covers \Oqq\Office\Jira\Tempo\Comment
  */
 final class CommentTest extends TestCase
 {

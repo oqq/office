@@ -6,13 +6,15 @@ namespace Oqq\Office\Test\Jira;
 
 use GuzzleHttp\ClientInterface;
 use Oqq\Office\Exception\InvalidArgumentException;
-use Oqq\Office\Jira\Comment;
+use Oqq\Office\Jira\Tempo\IssueKey;
 use Oqq\Office\Jira\GuzzleJiraApi;
-use Oqq\Office\Jira\IssueKey;
-use Oqq\Office\Jira\IssueKeys;
+use Oqq\Office\Jira\Api\IssueKeys;
 use Oqq\Office\Jira\JiraUser;
-use Oqq\Office\Jira\TimeSpent;
-use Oqq\Office\Jira\WorklogId;
+use Oqq\Office\Jira\Tempo\Comment;
+use Oqq\Office\Jira\Tempo\TimeSpentSeconds;
+use Oqq\Office\Jira\Tempo\WorklogId;
+use Oqq\Office\Test\Jira\Api\PayloadExample as ApiPayloadExample;
+use Oqq\Office\Test\Jira\Tempo\PayloadExample as TempoPayloadExample;
 use Oqq\Office\Util\DateTime;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -46,8 +48,8 @@ final class GuzzleJiraApiTest extends TestCase
     {
         $responsePayload = [
             'issues' => [
-                PayloadExample::issue(),
-                PayloadExample::issue(),
+                ApiPayloadExample::issue(),
+                ApiPayloadExample::issue(),
             ],
         ];
 
@@ -114,8 +116,8 @@ final class GuzzleJiraApiTest extends TestCase
     public function testItResolvesWorklogs(): void
     {
         $responsePayload = [
-            PayloadExample::worklog(),
-            PayloadExample::worklog(),
+            TempoPayloadExample::worklog(),
+            TempoPayloadExample::worklog(),
         ];
 
         $body = $this->prophesize(StreamInterface::class);
@@ -171,10 +173,10 @@ final class GuzzleJiraApiTest extends TestCase
 
         $this->jiraApi->createWorklog(
             JiraUser::fromString('some'),
-            Comment::fromString('test'),
             IssueKey::fromString('TEST-1'),
             DateTime::fromString('2021-01-01', 'Y-m-d'),
-            TimeSpent::fromSeconds(3600)
+            TimeSpentSeconds::fromInteger(3600),
+            Comment::fromString('test'),
         );
     }
 

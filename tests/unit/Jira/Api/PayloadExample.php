@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Test\Jira;
+namespace Oqq\Office\Test\Jira\Api;
 
 final class PayloadExample
 {
@@ -14,17 +14,8 @@ final class PayloadExample
     public static function issue(): array
     {
         return [
+            'id' => '1',
             'key' => self::issueKey(),
-        ];
-    }
-
-    public static function worklog(): array
-    {
-        return [
-            'tempoWorklogId' => 1,
-            'issue' => self::issue(),
-            'started' => '2021-01-10',
-            'timeSpentSeconds' => 60,
         ];
     }
 }

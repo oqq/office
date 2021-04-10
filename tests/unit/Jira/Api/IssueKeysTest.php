@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Test\Jira;
+namespace Oqq\Office\Test\Jira\Api;
 
 use Oqq\Office\Exception\InvalidArgumentException;
-use Oqq\Office\Jira\IssueKey;
-use Oqq\Office\Jira\IssueKeys;
+use Oqq\Office\Jira\Api\IssueKey;
+use Oqq\Office\Jira\Api\IssueKeys;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Oqq\Office\Jira\IssueKeys
+ * @covers \Oqq\Office\Jira\Api\IssueKeys
  */
 final class IssueKeysTest extends TestCase
 {

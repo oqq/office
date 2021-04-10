@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Test\Jira;
+namespace Oqq\Office\Test\Jira\Tempo;
 
-use Oqq\Office\Jira\Worklog;
+use Oqq\Office\Jira\Tempo\Worklog;
 use Oqq\Office\Test\ValueObjectPayloadAssertion;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Oqq\Office\Jira\Worklog
+ * @covers \Oqq\Office\Jira\Tempo\Worklog
  */
 final class WorklogTest extends TestCase
 {
@@ -20,13 +20,16 @@ final class WorklogTest extends TestCase
             'tempoWorklogId' => 1,
             'issue' => PayloadExample::issue(),
             'started' => '2021-01-10',
-            'timeSpentSeconds' => 60,
+            'timeSpentSeconds' => 3600,
+            'comment' => 'some',
         ]);
+
+        $valueObject->issue();
 
         Assert::assertSame('1', $valueObject->worklogId()->toString());
         Assert::assertSame('2021-01-10', $valueObject->started()->format('Y-m-d'));
-
-        $valueObject->issue();
+        Assert::assertSame(3600, $valueObject->timeSpentSeconds()->value());
+        Assert::assertSame('some', $valueObject->comment()->toString());
     }
 
     /**
@@ -49,11 +52,13 @@ final class WorklogTest extends TestCase
             'issue' => PayloadExample::issue(),
             'started' => '2021-01-10',
             'timeSpentSeconds' => 60,
+            'comment' => 'some',
         ];
 
         yield from ValueObjectPayloadAssertion::integer($perfectValues, 'tempoWorklogId');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'issue');
         yield from ValueObjectPayloadAssertion::string($perfectValues, 'started');
-        yield from ValueObjectPayloadAssertion::positiveInteger($perfectValues, 'timeSpentSeconds');
+        yield from ValueObjectPayloadAssertion::integer($perfectValues, 'timeSpentSeconds');
+        yield from ValueObjectPayloadAssertion::string($perfectValues, 'comment');
     }
 }

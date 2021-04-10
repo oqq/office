@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Test\Jira;
+namespace Oqq\Office\Test\Jira\Tempo;
 
 use Oqq\Office\Exception\InvalidArgumentException;
-use Oqq\Office\Jira\WorklogId;
+use Oqq\Office\Jira\Tempo\IssueId;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Oqq\Office\Jira\WorklogId
+ * @covers \Oqq\Office\Jira\Tempo\IssueId
  */
-final class WorklogIdTest extends TestCase
+final class IssueIdTest extends TestCase
 {
     /**
      * @dataProvider validValueProvider
      */
     public function testItWillCreateFromPerfectValue(int $valueExample): void
     {
-        $valueObject = WorklogId::fromInt($valueExample);
+        $valueObject = IssueId::fromInt($valueExample);
 
-        Assert::assertSame((string) $valueExample, $valueObject->toString());
+        Assert::assertSame($valueExample, $valueObject->value());
     }
 
     /**
@@ -39,6 +39,6 @@ final class WorklogIdTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected a positive integer. Got: 0');
 
-        WorklogId::fromInt(0);
+        IssueId::fromInt(0);
     }
 }

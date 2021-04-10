@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Test\Jira;
+namespace Oqq\Office\Test\Jira\Api;
 
 use Oqq\Office\Exception\InvalidArgumentException;
-use Oqq\Office\Jira\Worklog;
-use Oqq\Office\Jira\Worklogs;
+use Oqq\Office\Jira\Api\Issue;
+use Oqq\Office\Jira\Api\Issues;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Oqq\Office\Jira\Worklogs
+ * @covers \Oqq\Office\Jira\Api\Issues
  */
-final class WorklogsTest extends TestCase
+final class IssuesTest extends TestCase
 {
     /**
      * @dataProvider validPayloadProvider
      */
     public function testItWillCreateFromPerfectPayload(array $payloadExample): void
     {
-        $valueObject = Worklogs::fromArray($payloadExample);
+        $valueObject = Issues::fromArray($payloadExample);
 
         Assert::assertCount(\count($payloadExample), $valueObject);
-        Assert::assertContainsOnly(Worklog::class, $valueObject);
+        Assert::assertContainsOnly(Issue::class, $valueObject);
     }
 
     /**
@@ -37,14 +37,14 @@ final class WorklogsTest extends TestCase
 
         yield 'one value' => [
             [
-                PayloadExample::worklog(),
+                PayloadExample::issue(),
             ],
         ];
 
         yield 'two values' => [
             [
-                PayloadExample::worklog(),
-                PayloadExample::worklog(),
+                PayloadExample::issue(),
+                PayloadExample::issue(),
             ],
         ];
     }
@@ -56,7 +56,7 @@ final class WorklogsTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
-        Worklogs::fromArray($payloadExample);
+        Issues::fromArray($payloadExample);
     }
 
     /**

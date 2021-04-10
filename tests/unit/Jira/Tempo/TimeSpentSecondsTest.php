@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Office\Test\Jira;
+namespace Oqq\Office\Test\Jira\Tempo;
 
 use Oqq\Office\Exception\InvalidArgumentException;
-use Oqq\Office\Jira\TimeSpent;
+use Oqq\Office\Jira\Tempo\TimeSpentSeconds;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Oqq\Office\Jira\TimeSpent
+ * @covers \Oqq\Office\Jira\Tempo\TimeSpentSeconds
  */
-final class TimeSpentTest extends TestCase
+final class TimeSpentSecondsTest extends TestCase
 {
     /**
      * @dataProvider validValueProvider
      */
     public function testItWillCreateFromPerfectValue(int $valueExample): void
     {
-        $valueObject = TimeSpent::fromSeconds($valueExample);
+        $valueObject = TimeSpentSeconds::fromInteger($valueExample);
 
-        Assert::assertSame($valueExample, $valueObject->seconds());
+        Assert::assertSame($valueExample, $valueObject->value());
     }
 
     /**
@@ -38,6 +38,6 @@ final class TimeSpentTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected a positive integer. Got: 0');
 
-        TimeSpent::fromSeconds(0);
+        TimeSpentSeconds::fromInteger(0);
     }
 }
