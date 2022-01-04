@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <style type="text/css">
+    <style>
         @page {
             margin: 1.5cm;
         }
@@ -33,11 +33,10 @@
             margin: 5px 0;
         }
         td {
-            vertical-align: top;
             padding: 2px;
         }
         tr.bottom-line td, tr.bottom-line th {
-            border-bottom: 1px #515151 solid;
+            border-bottom: .5px #818181 solid;
         }
         .top-line {
             border-top: 2px #487c9f solid;
@@ -54,59 +53,65 @@
         .right {
             text-align: right;
         }
+        .paddy td, .paddy th {
+            padding: 5px 0;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="bold large blue top-line" style="padding: 5px 0">
-        Ich AG | IT-Beratungen
+        <?=$data->company->name?>
     </div>
 
     <div class="light" style="margin-top: 1.5cm">
         <table style="width: 40%; float: left;">
             <tr class="bottom-line">
                 <td class="tiny">
-                    Ich AG | Hauptstraße 2, 01234 Hauptstadt
+                    <?=$data->company->address->header?>
                 </td>
             </tr>
             <tr>
-                <td>Kundenname</td>
+                <td><?=$data->customer->name?></td>
             </tr>
             <tr>
-                <td>Hauptstraße 1</td>
+                <td><?=$data->customer->address->street?></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>01234 Hauptstadt</td>
+                <td>
+                    <?=$data->customer->address->postcode?>
+                    <?=$data->customer->address->city?>
+                </td>
             </tr>
         </table>
 
-        <table style="width: 40%; float: right;">
-            <tr class="bold small">
+        <table style="width: 40%; float: right;" class="small">
+            <tr class="bold">
                 <td>Rechnungsdatum</td>
-                <td class="right">01.01.2021</td>
+                <td class="right"><?=$data->invoice_date?></td>
             </tr>
             <tr>
                 <td>Leistungsdatum</td>
-                <td class="right">Dezember 2020</td>
+                <td class="right"><?=$data->performance_date?></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>Rechungsnummer</td>
-                <td class="right">20210101</td>
+                <td class="right"><?=$data->invoice_number?></td>
             </tr>
             <tr>
                 <td>Kundennummer</td>
-                <td class="right">2021001</td>
+                <td class="right"><?=$data->customer->number?></td>
             </tr>
             <tr>
                 <td>Steuernummer</td>
-                <td class="right">101/102/01234</td>
+                <td class="right"><?=$data->company->tax_number?></td>
             </tr>
         </table>
     </div>
@@ -114,10 +119,10 @@
     <div style="clear: both">&nbsp;</div>
 
     <div class="bold large" style="margin-top: 3cm">
-        Rechnung 20210101
+        Rechnung <?=$data->invoice_number?>
     </div>
 
-    <table class="grey">
+    <table class="grey paddy">
         <thead>
             <tr class="bottom-line">
                 <th class="left">Beschreibung</th>
@@ -127,73 +132,78 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="bottom-line">
-                <td class="left">Umsetzung Projekt "diverses"</td>
-                <td class="right">10,00&nbsp;h</td>
-                <td class="right">100,00&nbsp;€</td>
-                <td class="right">1.000,00&nbsp;€</td>
-            </tr>
+            <?php foreach ($data->invoice_lines as $invoice_line): ?>
+                <tr class="bottom-line">
+                    <td class="left"><?=$invoice_line->description?></td>
+                    <td class="right"><?=$invoice_line->amount?></td>
+                    <td class="right"><?=$invoice_line->single_price?></td>
+                    <td class="right"><?=$invoice_line->total_price?></td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
         <tfoot>
             <tr class="right">
                 <td></td>
                 <td></td>
                 <td>Netto</td>
-                <td>1.000,00&nbsp;€</td>
+                <td><?=$data->net_price?></td>
             </tr>
             <tr class="right">
                 <td></td>
                 <td></td>
-                <td>19,00% USt.</td>
-                <td>190,00&nbsp;€</td>
+                <td><?=$data->tax_rate?> USt.</td>
+                <td><?=$data->tax_price?></td>
             </tr>
             <tr class="bold right">
                 <td></td>
                 <td></td>
                 <td>Gesamt</td>
-                <td>1.190,00&nbsp;€</td>
+                <td><?=$data->total_price?></td>
             </tr>
         </tfoot>
     </table>
 
-    <div class="light" style="margin-top: 3cm">
-        Bitte überweisen Sie den Gesamtbetrag ohne Abzüge <b>innerhalb von 14 Tagen</b><br>
-        auf mein Bankkonto <b>DEXXXXXXXXXXXXXXXXXXXX</b> bei der <b>XYZ Bank</b>.<br>
+    <p class="light" style="margin-top: 2cm">
+        Bitte überweisen Sie den Gesamtbetrag ohne Abzüge <b><?=$data->payment_term?></b><br>
+        auf mein Bankkonto <b><?=$data->company->bank->account_number?></b> bei der <b><?=$data->company->bank->name?></b>.<br>
         <br>
         Vielen Dank für Ihren Auftrag.<br>
         <br>
         Ich
-    </div>
+    </p>
 
-    <div style="position: absolute; bottom: 1.5cm;">
+    <div style="position: absolute; bottom: 1cm; width: 100%;">
         <div class="tiny light top-line">
             <table style="width: 32%; float: left; text-align: left;">
                 <tr>
-                    <td>Ich AG | IT-Beratungen</td>
+                    <td><?=$data->company->name?></td>
                 </tr>
                 <tr>
-                    <td>Hauptstraße 2</td>
+                    <td><?=$data->company->address->street?></td>
                 </tr>
                 <tr>
-                    <td>01234 Hauptstadt</td>
+                    <td>
+                        <?=$data->company->address->postcode?>
+                        <?=$data->company->address->city?>
+                    </td>
                 </tr>
             </table>
 
             <table style="width: 32%; float: left; text-align: center;">
                 <tr>
-                    <td>+49 123 12345678</td>
+                    <td><?=$data->company->phone_number?></td>
                 </tr>
                 <tr>
-                    <td>info@ich.ag</td>
+                    <td><?=$data->company->email_address?></td>
                 </tr>
             </table>
 
             <table style="width: 32%; float: right; text-align: right;">
                 <tr>
-                    <td>XYZ Bank</td>
+                    <td><?=$data->company->bank->name?></td>
                 </tr>
                 <tr>
-                    <td>DEXXXXXXXXXXXXXXXXXXXX</td>
+                    <td><?=$data->company->bank->account_number?></td>
                 </tr>
             </table>
         </div>
