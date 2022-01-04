@@ -12,6 +12,7 @@ final class PayloadExample
             'id' => '1',
             'name' => 'test',
             'color' => '#fff',
+            'spaceId' => '2',
         ];
     }
 

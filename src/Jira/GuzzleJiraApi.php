@@ -6,10 +6,10 @@ namespace Oqq\Office\Jira;
 
 use DateTimeInterface;
 use GuzzleHttp\ClientInterface;
-use Oqq\Office\Jira\Tempo\IssueKey;
 use Oqq\Office\Jira\Api\IssueKeys;
 use Oqq\Office\Jira\Api\Issues;
 use Oqq\Office\Jira\Tempo\Comment;
+use Oqq\Office\Jira\Tempo\IssueKey;
 use Oqq\Office\Jira\Tempo\TimeSpentSeconds;
 use Oqq\Office\Jira\Tempo\WorklogId;
 use Oqq\Office\Jira\Tempo\Worklogs;
@@ -19,11 +19,9 @@ use Psr\Http\Message\ResponseInterface;
 
 final class GuzzleJiraApi implements JiraApi
 {
-    private ClientInterface $client;
-
-    public function __construct(ClientInterface $client)
-    {
-        $this->client = $client;
+    public function __construct(
+        private ClientInterface $client
+    ) {
     }
 
     public function getIssues(IssueKeys $issueKeys): Issues

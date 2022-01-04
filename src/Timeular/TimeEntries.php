@@ -28,7 +28,7 @@ final class TimeEntries implements IteratorAggregate
         return new self(...$timeEntries);
     }
 
-    public function sortByDate(): self
+    public function sortedByDate(): self
     {
         $values = $this->values;
 
@@ -37,6 +37,39 @@ final class TimeEntries implements IteratorAggregate
         });
 
         return new self(...$values);
+    }
+
+    public function filter(callable $filterFunction): self
+    {
+        return new self(...\array_filter($this->values, $filterFunction));
+    }
+
+    /**
+     * @return Generator<string, TimeEntries>
+     */
+    public function perWeek(): Generator
+    {
+        $entriesByWeek = [];
+
+        /** @var TimeEntry $timeEntry */
+        foreach ($this->sortedByDate() as $timeEntry) {
+            $entriesByWeek[$timeEntry->duration()->date()->format('Y \WW')][] = $timeEntry;
+        }
+
+        foreach ($entriesByWeek as $week => $values) {
+            yield $week => new self(...$values);
+        }
+    }
+
+    public function timeSpentSeconds(): int
+    {
+        $timeSpentSeconds = 0;
+
+        foreach ($this->values as $timeEntry) {
+            $timeSpentSeconds += $timeEntry->duration()->timeSpentSeconds();
+        }
+
+        return $timeSpentSeconds;
     }
 
     /**

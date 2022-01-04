@@ -14,14 +14,15 @@ final class Note
     public static function fromArray(array $values): self
     {
         Assert::keyExists($values, 'text');
-        Assert::string($values['text']);
+        Assert::nullOrString($values['text']);
 
         Assert::keyExists($values, 'tags');
         Assert::isArray($values['tags']);
 
+        $text = $values['text'] ?? '';
         $tags = Tags::fromArray($values['tags']);
 
-        return new self($values['text'], $tags);
+        return new self($text, $tags);
     }
 
     public function tags(): Tags

@@ -36,8 +36,8 @@ final class TimeSpentSecondsTest extends TestCase
     public function testItThrowsWithInvalidPayload(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected a positive integer. Got: 0');
+        $this->expectExceptionMessage('Expected a non-negative integer. Got: -1');
 
-        TimeSpentSeconds::fromInteger(0);
+        TimeSpentSeconds::fromInteger(-1);
     }
 }

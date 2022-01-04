@@ -12,7 +12,7 @@ final class TimeSpentSeconds
 
     public static function fromInteger(int $value): self
     {
-        Assert::positiveInteger($value);
+        Assert::natural($value);
 
         return new self($value);
     }

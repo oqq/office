@@ -78,16 +78,19 @@ final class ActivitiesTest extends TestCase
                 'id' => '1',
                 'name' => 'activity alpha',
                 'color' => '#fff',
+                'spaceId' => '2',
             ],
             [
                 'id' => '2',
                 'name' => 'activity beta',
                 'color' => '#fff',
+                'spaceId' => '2',
             ],
             [
                 'id' => '3',
                 'name' => 'activity gamma',
                 'color' => '#fff',
+                'spaceId' => '2',
             ],
         ]);
 

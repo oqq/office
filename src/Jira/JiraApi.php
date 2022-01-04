@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Oqq\Office\Jira;
 
 use DateTimeInterface;
-use Oqq\Office\Jira\Tempo\IssueKey;
 use Oqq\Office\Jira\Api\IssueKeys;
 use Oqq\Office\Jira\Api\Issues;
 use Oqq\Office\Jira\Tempo\Comment;
+use Oqq\Office\Jira\Tempo\IssueKey;
 use Oqq\Office\Jira\Tempo\TimeSpentSeconds;
 use Oqq\Office\Jira\Tempo\WorklogId;
 use Oqq\Office\Jira\Tempo\Worklogs;

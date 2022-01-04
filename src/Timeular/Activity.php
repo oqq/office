@@ -11,6 +11,7 @@ final class Activity
     private string $id;
     private string $name;
     private string $color;
+    private string $spaceId;
 
     public static function fromArray(array $values): self
     {
@@ -23,7 +24,10 @@ final class Activity
         Assert::keyExists($values, 'color');
         Assert::stringNotEmpty($values['color']);
 
-        return new self($values['id'], $values['name'], $values['color']);
+        Assert::keyExists($values, 'spaceId');
+        Assert::stringNotEmpty($values['spaceId']);
+
+        return new self($values['id'], $values['name'], $values['color'], $values['spaceId']);
     }
 
     public function id(): string
@@ -41,10 +45,16 @@ final class Activity
         return $this->color;
     }
 
-    private function __construct(string $id, string $name, string $color)
+    public function spaceId(): string
+    {
+        return $this->spaceId;
+    }
+
+    private function __construct(string $id, string $name, string $color, string $spaceId)
     {
         $this->id = $id;
         $this->name = $name;
         $this->color = $color;
+        $this->spaceId = $spaceId;
     }
 }

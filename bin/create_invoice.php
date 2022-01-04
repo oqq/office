@@ -21,7 +21,7 @@ $dompdf->loadHtml(\file_get_contents(INVOICE_TEMPLATE_FILE));
 $dompdf->render();
 
 if (!\is_dir(INVOICE_DIRECTORY)) {
-    if (!mkdir(INVOICE_DIRECTORY, true) && !is_dir(INVOICE_DIRECTORY)) {
+    if (!mkdir(INVOICE_DIRECTORY, recursive: true) && !is_dir(INVOICE_DIRECTORY)) {
         throw new \RuntimeException(sprintf('Directory "%s" was not created', INVOICE_DIRECTORY));
     }
 }

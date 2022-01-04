@@ -103,7 +103,7 @@ final class TimeEntriesTest extends TestCase
         ]);
 
         /** @var array<TimeEntry> $sortedEntries */
-        $sortedEntries = [...$valueObject->sortByDate()];
+        $sortedEntries = [...$valueObject->sortedByDate()];
 
         Assert::assertSame('3', $sortedEntries[0]->activityId());
         Assert::assertSame('1', $sortedEntries[1]->activityId());

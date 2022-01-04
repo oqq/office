@@ -20,11 +20,13 @@ final class ActivityTest extends TestCase
             'id' =>  '1',
             'name' => 'test',
             'color' => '#fff',
+            'spaceId' => '2',
         ]);
 
         Assert::assertSame('1', $valueObject->id());
         Assert::assertSame('test', $valueObject->name());
         Assert::assertSame('#fff', $valueObject->color());
+        Assert::assertSame('2', $valueObject->spaceId());
     }
 
     /**
@@ -46,10 +48,12 @@ final class ActivityTest extends TestCase
             'id' =>  '1',
             'name' => 'test',
             'color' => '#fff',
+            'spaceId' => '2',
         ];
 
         yield from ValueObjectPayloadAssertion::nonEmptyString($perfectValues, 'id');
         yield from ValueObjectPayloadAssertion::nonEmptyString($perfectValues, 'name');
         yield from ValueObjectPayloadAssertion::nonEmptyString($perfectValues, 'color');
+        yield from ValueObjectPayloadAssertion::nonEmptyString($perfectValues, 'spaceId');
     }
 }
