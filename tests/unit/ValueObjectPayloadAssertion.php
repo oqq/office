@@ -10,14 +10,22 @@ use Oqq\Office\Exception\AssertionFailedException;
 final class ValueObjectPayloadAssertion
 {
     /**
-     * @return iterable<string, array{0: array, 1: \Exception}>
+     * @return iterable<string, array{0: array, 1: Exception}>
      */
-    public static function string(array $perfectValues, string $key): iterable
+    public static function exist(array $perfectValues, string $key): iterable
     {
         yield 'missing value for ' . $key => [
             self::removeKey($perfectValues, $key),
             self::createException('Expected the key "' . $key . '" to exist'),
         ];
+    }
+
+    /**
+     * @return iterable<string, array{0: array, 1: Exception}>
+     */
+    public static function string(array $perfectValues, string $key): iterable
+    {
+        yield from self::exist($perfectValues, $key);
 
         yield 'invalid type for ' . $key => [
             self::replaceKey($perfectValues, $key, 5),
@@ -26,7 +34,7 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<string, array{0: array, 1: \Exception}>
+     * @return iterable<string, array{0: array, 1: Exception}>
      */
     public static function notEmptyString(array $perfectValues, string $key): iterable
     {
@@ -39,14 +47,11 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<string, array{0: array, 1: \Exception}>
+     * @return iterable<string, array{0: array, 1: Exception}>
      */
     public static function integer(array $perfectValues, string $key): iterable
     {
-        yield 'missing value for ' . $key => [
-            self::removeKey($perfectValues, $key),
-            self::createException('Expected the key "' . $key . '" to exist'),
-        ];
+        yield from self::exist($perfectValues, $key);
 
         yield 'invalid type for ' . $key => [
             self::replaceKey($perfectValues, $key, '5'),
@@ -55,14 +60,11 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<string, array{0: array, 1: \Exception}>
+     * @return iterable<string, array{0: array, 1: Exception}>
      */
     public static function positiveInteger(array $perfectValues, string $key): iterable
     {
-        yield 'missing value for ' . $key => [
-            self::removeKey($perfectValues, $key),
-            self::createException('Expected the key "' . $key . '" to exist'),
-        ];
+        yield from self::exist($perfectValues, $key);
 
         yield 'invalid type for ' . $key => [
             self::replaceKey($perfectValues, $key, '5'),
@@ -81,17 +83,43 @@ final class ValueObjectPayloadAssertion
     }
 
     /**
-     * @return iterable<string, array{0: array, 1: \Exception}>
+     * @return iterable<string, array{0: array, 1: Exception}>
+     */
+    public static function float(array $perfectValues, string $key): iterable
+    {
+        yield from self::exist($perfectValues, $key);
+
+        yield 'invalid value type for ' . $key => [
+            self::replaceKey($perfectValues, $key, '5.00'),
+            self::createException('Expected a float. Got: string'),
+        ];
+
+        yield 'invalid value for ' . $key => [
+            self::replaceKey($perfectValues, $key, 5),
+            self::createException('Expected a float. Got: integer'),
+        ];
+    }
+
+    /**
+     * @return iterable<string, array{0: array, 1: Exception}>
      */
     public static function array(array $perfectValues, string $key): iterable
     {
-        yield 'missing value for ' . $key => [
-            self::removeKey($perfectValues, $key),
-            self::createException('Expected the key "' . $key . '" to exist'),
-        ];
+        yield from self::exist($perfectValues, $key);
 
         yield 'invalid type for ' . $key . ' value' => [
             self::replaceKey($perfectValues, $key, 5),
+            self::createException('Expected an array. Got: integer'),
+        ];
+    }
+
+    /**
+     * @return iterable<array-key, array{0: array, 1: Exception}>
+     */
+    public static function arrayCollection(array $perfectValues): iterable
+    {
+        yield 'invalid value type' => [
+            self::replaceKey($perfectValues, '0', 5),
             self::createException('Expected an array. Got: integer'),
         ];
     }
