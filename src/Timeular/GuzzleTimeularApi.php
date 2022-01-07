@@ -6,7 +6,7 @@ namespace Oqq\Office\Timeular;
 
 use DateTimeInterface;
 use GuzzleHttp\ClientInterface;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 use Oqq\Office\Util\Json;
 use Psr\Http\Message\ResponseInterface;
 
@@ -24,8 +24,8 @@ final class GuzzleTimeularApi implements TimeularApi
         $response = $this->client->request('GET', '/api/v3/activities');
         $result = $this->decodeResponse($response);
 
-        Assert::keyExists($result, 'activities');
-        Assert::isArray($result['activities']);
+        Assertion::keyExists($result, 'activities');
+        Assertion::isArray($result['activities']);
 
         return Activities::fromArray($result['activities']);
     }
@@ -41,8 +41,8 @@ final class GuzzleTimeularApi implements TimeularApi
         $response = $this->client->request('GET', $requestUri);
         $result = $this->decodeResponse($response);
 
-        Assert::keyExists($result, 'timeEntries');
-        Assert::isArray($result['timeEntries']);
+        Assertion::keyExists($result, 'timeEntries');
+        Assertion::isArray($result['timeEntries']);
 
         return TimeEntries::fromArray($result['timeEntries']);
     }

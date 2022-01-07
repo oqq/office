@@ -7,7 +7,7 @@ namespace Oqq\Office\Application;
 use DateTimeImmutable;
 use Oqq\Office\Jira\JiraApi;
 use Oqq\Office\Jira\JiraUser;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 use Oqq\Office\Util\DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -80,7 +80,7 @@ final class DeleteWorklogCommand extends Command
     private function getMonth(InputInterface $input): Month
     {
         $month = $input->getArgument(self::ARGUMENT_MONTH);
-        Assert::string($month);
+        Assertion::string($month);
 
         return Month::fromString($month);
     }

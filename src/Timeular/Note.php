@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Oqq\Office\Timeular;
 
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 final class Note
 {
@@ -13,11 +13,11 @@ final class Note
 
     public static function fromArray(array $values): self
     {
-        Assert::keyExists($values, 'text');
-        Assert::nullOrString($values['text']);
+        Assertion::keyExists($values, 'text');
+        Assertion::nullOrString($values['text']);
 
-        Assert::keyExists($values, 'tags');
-        Assert::isArray($values['tags']);
+        Assertion::keyExists($values, 'tags');
+        Assertion::isArray($values['tags']);
 
         $text = $values['text'] ?? '';
         $tags = Tags::fromArray($values['tags']);

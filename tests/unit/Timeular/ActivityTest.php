@@ -32,7 +32,7 @@ final class ActivityTest extends TestCase
     /**
      * @dataProvider invalidPayloadProvider
      */
-    public function testItThrowsWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
+    public function testItThrowsWithInvalidPayload(array $payloadExample, \Exception $expectedException): void
     {
         $this->expectExceptionObject($expectedException);
 
@@ -51,9 +51,9 @@ final class ActivityTest extends TestCase
             'spaceId' => '2',
         ];
 
-        yield from ValueObjectPayloadAssertion::nonEmptyString($perfectValues, 'id');
-        yield from ValueObjectPayloadAssertion::nonEmptyString($perfectValues, 'name');
-        yield from ValueObjectPayloadAssertion::nonEmptyString($perfectValues, 'color');
-        yield from ValueObjectPayloadAssertion::nonEmptyString($perfectValues, 'spaceId');
+        yield from ValueObjectPayloadAssertion::notEmptyString($perfectValues, 'id');
+        yield from ValueObjectPayloadAssertion::notEmptyString($perfectValues, 'name');
+        yield from ValueObjectPayloadAssertion::notEmptyString($perfectValues, 'color');
+        yield from ValueObjectPayloadAssertion::notEmptyString($perfectValues, 'spaceId');
     }
 }

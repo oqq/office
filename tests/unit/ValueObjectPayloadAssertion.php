@@ -4,94 +4,95 @@ declare(strict_types=1);
 
 namespace Oqq\Office\Test;
 
-use Oqq\Office\Exception\InvalidArgumentException;
+use Exception;
+use Oqq\Office\Exception\AssertionFailedException;
 
 final class ValueObjectPayloadAssertion
 {
     /**
-     * @return iterable<string, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: array, 1: \Exception}>
      */
     public static function string(array $perfectValues, string $key): iterable
     {
         yield 'missing value for ' . $key => [
-            new InvalidArgumentException('Expected the key "' . $key . '" to exist'),
             self::removeKey($perfectValues, $key),
+            self::createException('Expected the key "' . $key . '" to exist'),
         ];
 
         yield 'invalid type for ' . $key => [
-            new InvalidArgumentException('Expected a string. Got: integer'),
             self::replaceKey($perfectValues, $key, 5),
+            self::createException('Expected a string. Got: integer'),
         ];
     }
 
     /**
-     * @return iterable<string, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: array, 1: \Exception}>
      */
-    public static function nonEmptyString(array $perfectValues, string $key): iterable
+    public static function notEmptyString(array $perfectValues, string $key): iterable
     {
         yield from self::string($perfectValues, $key);
 
         yield 'empty value for ' . $key => [
-            new InvalidArgumentException('Expected a different value than ""'),
             self::replaceKey($perfectValues, $key, ''),
+            self::createException('Expected a different value than ""'),
         ];
     }
 
     /**
-     * @return iterable<string, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: array, 1: \Exception}>
      */
     public static function integer(array $perfectValues, string $key): iterable
     {
         yield 'missing value for ' . $key => [
-            new InvalidArgumentException('Expected the key "' . $key . '" to exist'),
             self::removeKey($perfectValues, $key),
+            self::createException('Expected the key "' . $key . '" to exist'),
         ];
 
         yield 'invalid type for ' . $key => [
-            new InvalidArgumentException('Expected an integer. Got: string'),
             self::replaceKey($perfectValues, $key, '5'),
+            self::createException('Expected an integer. Got: string'),
         ];
     }
 
     /**
-     * @return iterable<string, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: array, 1: \Exception}>
      */
     public static function positiveInteger(array $perfectValues, string $key): iterable
     {
         yield 'missing value for ' . $key => [
-            new InvalidArgumentException('Expected the key "' . $key . '" to exist'),
             self::removeKey($perfectValues, $key),
+            self::createException('Expected the key "' . $key . '" to exist'),
         ];
 
         yield 'invalid type for ' . $key => [
-            new InvalidArgumentException('Expected a positive integer. Got: "5"'),
             self::replaceKey($perfectValues, $key, '5'),
+            self::createException('Expected a positive integer. Got: "5"'),
         ];
 
         yield 'invalid zero value for ' . $key => [
-            new InvalidArgumentException('Expected a positive integer. Got: 0'),
             self::replaceKey($perfectValues, $key, 0),
+            self::createException('Expected a positive integer. Got: 0'),
         ];
 
         yield 'invalid negative value for ' . $key => [
-            new InvalidArgumentException('Expected a positive integer. Got: -5'),
             self::replaceKey($perfectValues, $key, -5),
+            self::createException('Expected a positive integer. Got: -5'),
         ];
     }
 
     /**
-     * @return iterable<string, array{0: \Exception, 1: array}>
+     * @return iterable<string, array{0: array, 1: \Exception}>
      */
     public static function array(array $perfectValues, string $key): iterable
     {
         yield 'missing value for ' . $key => [
-            new InvalidArgumentException('Expected the key "' . $key . '" to exist'),
             self::removeKey($perfectValues, $key),
+            self::createException('Expected the key "' . $key . '" to exist'),
         ];
 
         yield 'invalid type for ' . $key . ' value' => [
-            new InvalidArgumentException('Expected an array. Got: integer'),
             self::replaceKey($perfectValues, $key, 5),
+            self::createException('Expected an array. Got: integer'),
         ];
     }
 
@@ -103,5 +104,10 @@ final class ValueObjectPayloadAssertion
     private static function replaceKey(array $values, string $key, mixed $newValue): array
     {
         return \array_merge($values, [$key => $newValue]);
+    }
+
+    private static function createException(string $message): Exception
+    {
+        return new AssertionFailedException($message);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Oqq\Office\Timeular;
 
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 final class Activity
 {
@@ -15,17 +15,17 @@ final class Activity
 
     public static function fromArray(array $values): self
     {
-        Assert::keyExists($values, 'id');
-        Assert::stringNotEmpty($values['id']);
+        Assertion::keyExists($values, 'id');
+        Assertion::stringNotEmpty($values['id']);
 
-        Assert::keyExists($values, 'name');
-        Assert::stringNotEmpty($values['name']);
+        Assertion::keyExists($values, 'name');
+        Assertion::stringNotEmpty($values['name']);
 
-        Assert::keyExists($values, 'color');
-        Assert::stringNotEmpty($values['color']);
+        Assertion::keyExists($values, 'color');
+        Assertion::stringNotEmpty($values['color']);
 
-        Assert::keyExists($values, 'spaceId');
-        Assert::stringNotEmpty($values['spaceId']);
+        Assertion::keyExists($values, 'spaceId');
+        Assertion::stringNotEmpty($values['spaceId']);
 
         return new self($values['id'], $values['name'], $values['color'], $values['spaceId']);
     }

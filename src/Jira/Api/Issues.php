@@ -7,7 +7,7 @@ namespace Oqq\Office\Jira\Api;
 use Generator;
 use IteratorAggregate;
 use Oqq\Office\Jira\Api\Issue;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 /**
  * @implements IteratorAggregate<Issue>
@@ -19,7 +19,7 @@ final class Issues implements IteratorAggregate
 
     public static function fromArray(array $values): self
     {
-        Assert::allIsArray($values);
+        Assertion::allIsArray($values);
 
         $issues = \array_map(
             static fn (array $issue): Issue => Issue::fromArray($issue),

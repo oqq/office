@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Oqq\Office\Util;
 
-use Oqq\Office\Exception\InvalidArgumentException;
+use Oqq\Office\Exception\AssertionFailedException;
+use Webmozart\Assert\Assert;
 
-final class Assert extends \Webmozart\Assert\Assert
+final class Assertion extends Assert
 {
     /**
      * @param string $message
@@ -14,6 +15,6 @@ final class Assert extends \Webmozart\Assert\Assert
      */
     protected static function reportInvalidArgument($message): void
     {
-        throw new InvalidArgumentException($message);
+        throw new AssertionFailedException($message);
     }
 }

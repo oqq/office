@@ -35,7 +35,7 @@ final class WorklogTest extends TestCase
     /**
      * @dataProvider invalidPayloadProvider
      */
-    public function testItThrowsWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
+    public function testItThrowsWithInvalidPayload(array $payloadExample, \Exception $expectedException): void
     {
         $this->expectExceptionObject($expectedException);
 
@@ -43,7 +43,7 @@ final class WorklogTest extends TestCase
     }
 
     /**
-     * @return iterable<string, array{0: \Exception, 1: array}>
+     * @return iterable<array-key, array{0: array, 1: \Exception}>
      */
     public function invalidPayloadProvider(): iterable
     {

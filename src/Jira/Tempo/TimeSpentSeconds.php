@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Oqq\Office\Jira\Tempo;
 
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 final class TimeSpentSeconds
 {
@@ -12,7 +12,7 @@ final class TimeSpentSeconds
 
     public static function fromInteger(int $value): self
     {
-        Assert::natural($value);
+        Assertion::natural($value);
 
         return new self($value);
     }

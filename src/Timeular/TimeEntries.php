@@ -6,7 +6,7 @@ namespace Oqq\Office\Timeular;
 
 use Generator;
 use IteratorAggregate;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 /**
  * @implements IteratorAggregate<TimeEntry>
@@ -18,7 +18,7 @@ final class TimeEntries implements IteratorAggregate
 
     public static function fromArray(array $values): self
     {
-        Assert::allIsArray($values);
+        Assertion::allIsArray($values);
 
         $timeEntries = \array_map(
             static fn (array $timeEntry): TimeEntry => TimeEntry::fromArray($timeEntry),

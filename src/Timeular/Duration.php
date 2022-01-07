@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Oqq\Office\Timeular;
 
 use DateTimeImmutable;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 use Oqq\Office\Util\DateTime;
 
 final class Duration
@@ -18,11 +18,11 @@ final class Duration
 
     public static function fromArray(array $values): self
     {
-        Assert::keyExists($values, 'startedAt');
-        Assert::string($values['startedAt']);
+        Assertion::keyExists($values, 'startedAt');
+        Assertion::string($values['startedAt']);
 
-        Assert::keyExists($values, 'stoppedAt');
-        Assert::string($values['stoppedAt']);
+        Assertion::keyExists($values, 'stoppedAt');
+        Assertion::string($values['stoppedAt']);
 
         $startedAt = DateTime::fromString($values['startedAt'], TimeularApi::DATETIME_FORMAT);
         $stoppedAt = DateTime::fromString($values['stoppedAt'], TimeularApi::DATETIME_FORMAT);

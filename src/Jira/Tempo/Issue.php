@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Oqq\Office\Jira\Tempo;
 
 use Oqq\Office\Jira\Api\IssueKey;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 final class Issue
 {
@@ -14,11 +14,11 @@ final class Issue
 
     public static function fromArray(array $values): self
     {
-        Assert::keyExists($values, 'id');
-        Assert::integer($values['id']);
+        Assertion::keyExists($values, 'id');
+        Assertion::integer($values['id']);
 
-        Assert::keyExists($values, 'key');
-        Assert::string($values['key']);
+        Assertion::keyExists($values, 'key');
+        Assertion::string($values['key']);
 
         $issueId = IssueId::fromInt($values['id']);
         $issueKey = IssueKey::fromString($values['key']);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Oqq\Office\Test\Jira\Api;
 
-use Oqq\Office\Exception\InvalidArgumentException;
+use Oqq\Office\Exception\AssertionFailedException;
 use Oqq\Office\Jira\Api\IssueId;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +36,7 @@ final class IssueIdTest extends TestCase
 
     public function testItThrowsWithInvalidPayload(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(AssertionFailedException::class);
         $this->expectExceptionMessage('Expected a non-empty value. Got: ""');
 
         IssueId::fromString('');

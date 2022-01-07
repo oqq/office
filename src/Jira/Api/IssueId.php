@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Oqq\Office\Jira\Api;
 
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 final class IssueId
 {
@@ -12,7 +12,7 @@ final class IssueId
 
     public static function fromString(string $value): self
     {
-        Assert::notEmpty($value);
+        Assertion::notEmpty($value);
 
         return new self($value);
     }

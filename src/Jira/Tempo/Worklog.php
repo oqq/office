@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Oqq\Office\Jira\Tempo;
 
 use DateTimeImmutable;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 use Oqq\Office\Util\DateTime;
 
 final class Worklog
@@ -18,20 +18,20 @@ final class Worklog
 
     public static function fromArray(array $values): self
     {
-        Assert::keyExists($values, 'tempoWorklogId');
-        Assert::integer($values['tempoWorklogId']);
+        Assertion::keyExists($values, 'tempoWorklogId');
+        Assertion::integer($values['tempoWorklogId']);
 
-        Assert::keyExists($values, 'issue');
-        Assert::isArray($values['issue']);
+        Assertion::keyExists($values, 'issue');
+        Assertion::isArray($values['issue']);
 
-        Assert::keyExists($values, 'started');
-        Assert::string($values['started']);
+        Assertion::keyExists($values, 'started');
+        Assertion::string($values['started']);
 
-        Assert::keyExists($values, 'timeSpentSeconds');
-        Assert::integer($values['timeSpentSeconds']);
+        Assertion::keyExists($values, 'timeSpentSeconds');
+        Assertion::integer($values['timeSpentSeconds']);
 
-        Assert::keyExists($values, 'comment');
-        Assert::string($values['comment']);
+        Assertion::keyExists($values, 'comment');
+        Assertion::string($values['comment']);
 
         $worklogId = WorklogId::fromInt($values['tempoWorklogId']);
         $issue = Issue::fromArray($values['issue']);

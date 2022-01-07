@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Oqq\Office\Jira\Tempo\IssueKey;
 use Oqq\Office\Jira\Tempo\TimeSpentSeconds;
 use Oqq\Office\Timeular\Activity;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableSeparator;
@@ -93,7 +93,7 @@ final class ListTimeEntriesCommand extends Command
     private function getMonth(InputInterface $input): Month
     {
         $month = $input->getArgument(self::ARGUMENT_MONTH);
-        Assert::string($month);
+        Assertion::string($month);
 
         return Month::fromString($month);
     }
@@ -106,7 +106,7 @@ final class ListTimeEntriesCommand extends Command
             return null;
         }
 
-        Assert::string($space);
+        Assertion::string($space);
 
         return $space;
     }

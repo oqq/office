@@ -7,7 +7,7 @@ namespace Oqq\Office\Jira\Tempo;
 use Generator;
 use IteratorAggregate;
 use Oqq\Office\Jira\Tempo\Worklog;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 /**
  * @implements IteratorAggregate<Worklog>
@@ -19,7 +19,7 @@ final class Worklogs implements IteratorAggregate
 
     public static function fromArray(array $values): self
     {
-        Assert::allIsArray($values);
+        Assertion::allIsArray($values);
 
         $worklogs = \array_map(
             static fn (array $worklog): Worklog => Worklog::fromArray($worklog),

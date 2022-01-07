@@ -77,7 +77,7 @@ final class DurationTest extends TestCase
     /**
      * @dataProvider invalidPayloadProvider
      */
-    public function testItThrowsWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
+    public function testItThrowsWithInvalidPayload(array $payloadExample, \Exception $expectedException): void
     {
         $this->expectExceptionObject($expectedException);
 

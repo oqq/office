@@ -32,7 +32,7 @@ final class TimeEntryTest extends TestCase
     /**
      * @dataProvider invalidPayloadProvider
      */
-    public function testItThrowsWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
+    public function testItThrowsWithInvalidPayload(array $payloadExample, \Exception $expectedException): void
     {
         $this->expectExceptionObject($expectedException);
 
@@ -51,8 +51,8 @@ final class TimeEntryTest extends TestCase
             'duration' => PayloadExample::duration(),
         ];
 
-        yield from ValueObjectPayloadAssertion::nonEmptyString($perfectValues, 'id');
-        yield from ValueObjectPayloadAssertion::nonEmptyString($perfectValues, 'activityId');
+        yield from ValueObjectPayloadAssertion::notEmptyString($perfectValues, 'id');
+        yield from ValueObjectPayloadAssertion::notEmptyString($perfectValues, 'activityId');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'note');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'duration');
     }

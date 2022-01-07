@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Oqq\Office\Application;
 
 use DateTimeImmutable;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 final class Week
 {

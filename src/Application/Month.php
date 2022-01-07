@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Oqq\Office\Application;
 
 use DateTimeImmutable;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 final class Month
 {
@@ -13,7 +13,7 @@ final class Month
 
     public static function fromString(string $value): self
     {
-        Assert::notFalse(DateTimeImmutable::createFromFormat('Y-m', $value));
+        Assertion::notFalse(DateTimeImmutable::createFromFormat('Y-m', $value));
 
         return new self($value);
     }

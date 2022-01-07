@@ -6,7 +6,7 @@ namespace Oqq\Office\Test\Timeular;
 
 use DateTimeImmutable;
 use GuzzleHttp\ClientInterface;
-use Oqq\Office\Exception\InvalidArgumentException;
+use Oqq\Office\Exception\AssertionFailedException;
 use Oqq\Office\Timeular\GuzzleTimeularApi;
 use Oqq\Office\Util\DateTime;
 use PHPUnit\Framework\Assert;
@@ -81,12 +81,12 @@ final class GuzzleTimeularApiTest extends TestCase
     public function invalidActivitiesResponseProvider(): iterable
     {
         yield 'missing activities key' => [
-            new InvalidArgumentException('Expected the key "activities" to exist'),
+            new AssertionFailedException('Expected the key "activities" to exist'),
             [],
         ];
 
         yield 'invalid activities content' => [
-            new InvalidArgumentException('Expected an array. Got: boolean'),
+            new AssertionFailedException('Expected an array. Got: boolean'),
             [
                 'activities' => false,
             ],
@@ -149,12 +149,12 @@ final class GuzzleTimeularApiTest extends TestCase
     public function invalidTimeEntriesResponseProvider(): iterable
     {
         yield 'missing time entries key' => [
-            new InvalidArgumentException('Expected the key "timeEntries" to exist'),
+            new AssertionFailedException('Expected the key "timeEntries" to exist'),
             [],
         ];
 
         yield 'invalid time entries content' => [
-            new InvalidArgumentException('Expected an array. Got: boolean'),
+            new AssertionFailedException('Expected an array. Got: boolean'),
             [
                 'timeEntries' => false,
             ],

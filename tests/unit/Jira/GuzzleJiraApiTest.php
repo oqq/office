@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Oqq\Office\Test\Jira;
 
 use GuzzleHttp\ClientInterface;
-use Oqq\Office\Exception\InvalidArgumentException;
+use Oqq\Office\Exception\AssertionFailedException;
 use Oqq\Office\Jira\GuzzleJiraApi;
 use Oqq\Office\Jira\Api\IssueKeys;
 use Oqq\Office\Jira\JiraUser;
@@ -101,12 +101,12 @@ final class GuzzleJiraApiTest extends TestCase
     public function invalidIssuesResponseProvider(): iterable
     {
         yield 'missing issues key' => [
-            new InvalidArgumentException('Expected the key "issues" to exist'),
+            new AssertionFailedException('Expected the key "issues" to exist'),
             [],
         ];
 
         yield 'invalid activities content' => [
-            new InvalidArgumentException('Expected an array. Got: boolean'),
+            new AssertionFailedException('Expected an array. Got: boolean'),
             [
                 'issues' => false,
             ],

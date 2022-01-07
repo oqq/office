@@ -13,7 +13,7 @@ use Oqq\Office\Jira\Tempo\IssueKey;
 use Oqq\Office\Jira\Tempo\TimeSpentSeconds;
 use Oqq\Office\Jira\Tempo\WorklogId;
 use Oqq\Office\Jira\Tempo\Worklogs;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 use Oqq\Office\Util\Json;
 use Psr\Http\Message\ResponseInterface;
 
@@ -38,8 +38,8 @@ final class GuzzleJiraApi implements JiraApi
 
         $result = $this->decodeResponse($response);
 
-        Assert::keyExists($result, 'issues');
-        Assert::isArray($result['issues']);
+        Assertion::keyExists($result, 'issues');
+        Assertion::isArray($result['issues']);
 
         return Issues::fromArray($result['issues']);
     }

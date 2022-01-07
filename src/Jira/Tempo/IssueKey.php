@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Oqq\Office\Jira\Tempo;
 
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 final class IssueKey
 {
@@ -14,7 +14,7 @@ final class IssueKey
 
     public static function fromString(string $value): self
     {
-        Assert::regex($value, self::PATTERN);
+        Assertion::regex($value, self::PATTERN);
 
         return new self($value);
     }

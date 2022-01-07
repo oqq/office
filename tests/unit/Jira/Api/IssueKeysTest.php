@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Oqq\Office\Test\Jira\Api;
 
-use Oqq\Office\Exception\InvalidArgumentException;
+use Oqq\Office\Exception\AssertionFailedException;
 use Oqq\Office\Jira\Api\IssueKey;
 use Oqq\Office\Jira\Api\IssueKeys;
 use PHPUnit\Framework\Assert;
@@ -53,7 +53,7 @@ final class IssueKeysTest extends TestCase
     /**
      * @dataProvider invalidPayloadProvider
      */
-    public function testItThrowsWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
+    public function testItThrowsWithInvalidPayload(array $payloadExample, \Exception $expectedException): void
     {
         $this->expectExceptionObject($expectedException);
 
@@ -61,13 +61,13 @@ final class IssueKeysTest extends TestCase
     }
 
     /**
-     * @return iterable<string, array{0: \Exception, 1: array}>
+     * @return iterable<array-key, array{0: array, 1: \Exception}>
      */
     public function invalidPayloadProvider(): iterable
     {
         yield 'invalid type' => [
-            new InvalidArgumentException('Expected a string. Got: integer'),
             [5],
+            new AssertionFailedException('Expected a string. Got: integer'),
         ];
     }
 }

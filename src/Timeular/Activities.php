@@ -7,7 +7,7 @@ namespace Oqq\Office\Timeular;
 use Generator;
 use IteratorAggregate;
 use Oqq\Office\Exception\RuntimeException;
-use Oqq\Office\Util\Assert;
+use Oqq\Office\Util\Assertion;
 
 /**
  * @implements IteratorAggregate<Activity>
@@ -19,7 +19,7 @@ final class Activities implements IteratorAggregate
 
     public static function fromArray(array $values): self
     {
-        Assert::allIsArray($values);
+        Assertion::allIsArray($values);
 
         $activities = \array_map(
             static fn (array $activity): Activity => Activity::fromArray($activity),
