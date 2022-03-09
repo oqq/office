@@ -21,6 +21,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 final class ListTimeEntriesCommand extends Command
 {
     private const ARGUMENT_MONTH = 'month';
+    private const OPTION_WEEK = 'week';
     private const OPTION_SPACE = 'space';
     private const OPTION_SEND_WORKLOGS = 'send_worklogs';
 
@@ -43,13 +44,20 @@ final class ListTimeEntriesCommand extends Command
             self::ARGUMENT_MONTH,
             InputArgument::OPTIONAL,
             'Month to display worklogs for. Defaults to last month.',
-            $this->getLastMonth()
+            $this->getLastMonth(),
+        );
+
+        $this->addOption(
+            self::OPTION_WEEK,
+            '-w',
+            InputOption::VALUE_REQUIRED,
+            'Filter by week to display worklogs for.'
         );
 
         $this->addOption(
             self::OPTION_SPACE,
-            InputArgument::OPTIONAL,
-            InputOption::VALUE_OPTIONAL,
+            null,
+            InputOption::VALUE_REQUIRED,
             'Space to display worklogs for. Defaults to "all spaces".'
         );
 
@@ -63,8 +71,10 @@ final class ListTimeEntriesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $month = $this->getMonth($input);
-        $space = $this->getSpace($input);
+        $inputMonth = $this->getMonth($input);
+        $inputWeek = $this->getWeek($input);
+        $inputSpace = $this->getSpace($input);
+
         $sendWorklogs = $this->getSendWorklogOption($input, $output);
 
         $tableHeaders = ['Date', 'Time Spent', 'Issue', 'Comment'];
@@ -74,9 +84,13 @@ final class ListTimeEntriesCommand extends Command
 
         $timeSpentMonth = 0;
 
-        foreach ($this->worklogResolver->getWorklogsForMonthByWeek($month) as $week => $worklogs) {
-            if (null !== $space) {
-                $worklogs = $worklogs->filterBySpace($space);
+        foreach ($this->worklogResolver->getWorklogsForMonthByWeek($inputMonth) as $week => $worklogs) {
+            if ($inputWeek && $week->value() !== $inputWeek->value()) {
+                continue;
+            }
+
+            if (null !== $inputSpace) {
+                $worklogs = $worklogs->filterBySpace($inputSpace);
             }
 
             $timeSpentMonth += $worklogs->timeSpent()->value();
@@ -84,7 +98,7 @@ final class ListTimeEntriesCommand extends Command
             $this->addWorklogRows($table, $worklogs, $sendWorklogs);
         }
 
-        $table->addRow([$month->value(), $this->timeSpentFromSeconds(TimeSpentSeconds::fromInteger($timeSpentMonth))]);
+        $table->addRow([$inputMonth->value(), $this->timeSpentFromSeconds(TimeSpentSeconds::fromInteger($timeSpentMonth))]);
         $table->render();
 
         return 0;
@@ -96,6 +110,19 @@ final class ListTimeEntriesCommand extends Command
         Assertion::string($month);
 
         return Month::fromString($month);
+    }
+
+    private function getWeek(InputInterface $input): ?Week
+    {
+        $week = $input->getOption(self::OPTION_WEEK);
+
+        if (null === $week) {
+            return null;
+        }
+
+        Assertion::string($week);
+
+        return Week::fromString($week);
     }
 
     private function getSpace(InputInterface $input): ?string
