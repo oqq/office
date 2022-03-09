@@ -16,6 +16,7 @@
         "guzzlehttp/guzzle": "^7.4",
         "nemiah/php-fints": "^3.2",
         "psr/http-message": "^1.0",
+        "vlucas/phpdotenv": "^5.4",
         "webmozart/assert": "^1.10"
     },
     "require-dev": {

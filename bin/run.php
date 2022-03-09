@@ -17,17 +17,20 @@ use Symfony\Component\Console\Application;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$timeularApiKey = getenv('TIMEULAR_API_KEY');
-$timeularApiSecret = getenv('TIMEULAR_API_SECRET');
-$jiraBaseUrl = getenv('JIRA_BASE_URL');
-$jiraUsername = getenv('JIRA_USERNAME');
-$jiraPassword = getenv('JIRA_PASSWORD');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
 
-$getJsonResponse = static fn (ResponseInterface $response): array => Json::decode((string) $response->getBody());
+$timeularBaseUrl = 'https://api.timeular.com/';
+$timeularApiKey = $_ENV['TIMEULAR_API_KEY'];
+$timeularApiSecret = $_ENV['TIMEULAR_API_SECRET'];
+$jiraBaseUrl = $_ENV['JIRA_BASE_URL'];
+$jiraUsername = $_ENV['JIRA_USERNAME'];
+$jiraPassword = $_ENV['JIRA_PASSWORD'];
+
 
 
 $timeularClient = new Client([
-    'base_uri' => 'https://api.timeular.com/'
+    'base_uri' => $timeularBaseUrl,
 ]);
 
 $response = $timeularClient->request('POST', '/api/v3/developer/sign-in', [
@@ -37,10 +40,11 @@ $response = $timeularClient->request('POST', '/api/v3/developer/sign-in', [
     ],
 ]);
 
+$getJsonResponse = static fn (ResponseInterface $response): array => Json::decode((string) $response->getBody());
 $token = $getJsonResponse($response)['token'];
 
 $timeularClient = new Client([
-    'base_uri' => 'https://api.timeular.com/',
+    'base_uri' => $timeularBaseUrl,
     RequestOptions::HEADERS => [
         'Authorization' => "Bearer $token"
     ],
