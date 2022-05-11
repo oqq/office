@@ -17,23 +17,21 @@ use PHPUnit\Framework\TestCase;
 final class TransactionsTest extends TestCase
 {
     /**
-     * @dataProvider getValidPayloadExamples
+     * @dataProvider getValidValueExamples
      */
-    public function test_it_creates_from_payload(array $payload): void
+    public function test_it_creates_from_values(array $values): void
     {
-        $valueObject = Transactions::fromPayload($payload);
+        $valueObject = Transactions::fromArray($values);
 
-        Assert::assertSame($payload, $valueObject->toArray());
+        Assert::assertSame($values, $valueObject->toArray());
     }
 
     /**
      * @return iterable<array-key, array{0: array}>
      */
-    public function getValidPayloadExamples(): iterable
+    public function getValidValueExamples(): iterable
     {
-        yield [
-            [],
-        ];
+        yield [[]];
 
         yield [
             [
@@ -50,19 +48,19 @@ final class TransactionsTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidPayloadExamples
+     * @dataProvider getInvalidValueExamples
      */
-    public function test_it_throws_with_invalid_payload(array $payload, Exception $expectedException): void
+    public function test_it_throws_with_invalid_payload(array $values, Exception $expectedException): void
     {
         $this->expectExceptionObject($expectedException);
 
-        Transactions::fromPayload($payload);
+        Transactions::fromArray($values);
     }
 
     /**
      * @return iterable<array-key, array{0: array, 1: Exception}>
      */
-    public function getInvalidPayloadExamples(): iterable
+    public function getInvalidValueExamples(): iterable
     {
         $perfectValues = [
             ValueObjectPayloadExample::transaction(),

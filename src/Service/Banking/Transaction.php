@@ -9,12 +9,12 @@ use Oqq\Office\Util\Assertion;
 final class Transaction
 {
     /** @var non-empty-string */
-    private readonly string $date;
-    private readonly string $name;
-    private readonly string $description;
-    private readonly float $amount;
+    private string $date;
+    private string $name;
+    private string $description;
+    private float $amount;
 
-    public static function fromPayload(array $payload): self
+    public static function fromArray(array $payload): self
     {
         Assertion::keyExists($payload, 'date');
         Assertion::stringNotEmpty($payload['date']);
@@ -39,6 +39,29 @@ final class Transaction
             'description' => $this->description,
             'amount' => $this->amount,
         ];
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    public function date(): string
+    {
+        return $this->date;
+    }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function description(): string
+    {
+        return $this->description;
+    }
+
+    public function amount(): float
+    {
+        return $this->amount;
     }
 
     /**

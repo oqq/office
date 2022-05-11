@@ -11,13 +11,13 @@ final class Transactions
     /** @var array<Transaction> */
     private readonly array $values;
 
-    public static function fromPayload(array $payload): self
+    public static function fromArray(array $payload): self
     {
         Assertion::allIsArray($payload);
 
         $values = \array_map(
-            static fn (array $value): Transaction => Transaction::fromPayload($value),
-            $payload
+            static fn (array $value): Transaction => Transaction::fromArray($value),
+            $payload,
         );
 
         return new self(...$values);
@@ -27,7 +27,7 @@ final class Transactions
     {
         return \array_map(
             static fn (Transaction $value): array => $value->toArray(),
-            $this->values
+            $this->values,
         );
     }
 

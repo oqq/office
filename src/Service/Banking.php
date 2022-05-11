@@ -55,7 +55,7 @@ final class Banking
             }
         }
 
-        return Transactions::fromPayload($transactions);
+        return Transactions::fromArray($transactions);
     }
 
     private function handleStrongAuthentication(BaseAction $action): void
@@ -98,7 +98,9 @@ final class Banking
                 sleep($tanMode->getPeriodicDecoupledCheckDelaySeconds());
             }
             throw new \RuntimeException("Not confirmed after $attempt attempts, which is the limit.");
-        } elseif ($tanMode->allowsManualConfirmation()) {
+        }
+
+        if ($tanMode->allowsManualConfirmation()) {
             do {
                 echo "Please type 'done' and hit Return when you've completed the authentication on the other device.\n";
                 while (trim(fgets(STDIN)) !== 'done') {

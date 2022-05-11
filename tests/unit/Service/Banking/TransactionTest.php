@@ -7,6 +7,7 @@ namespace Oqq\Office\Test\Service\Banking;
 use Exception;
 use Oqq\Office\Service\Banking\Transaction;
 use Oqq\Office\Test\ValueObjectPayloadAssertion;
+use Oqq\Office\Test\ValueObjectPayloadExample;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
@@ -16,50 +17,57 @@ use PHPUnit\Framework\TestCase;
 final class TransactionTest extends TestCase
 {
     /**
-     * @dataProvider getValidPayloadExamples
+     * @dataProvider getValidValueExamples
      */
-    public function test_it_creates_from_payload(array $payload): void
+    public function test_it_creates_from_values(array $values): void
     {
-        $valueObject = Transaction::fromPayload($payload);
+        $valueObject = Transaction::fromArray($values);
 
-        Assert::assertSame($payload, $valueObject->toArray());
+        Assert::assertSame($values, $valueObject->toArray());
+
+        Assert::assertSame($values['date'], $valueObject->date());
+        Assert::assertSame($values['name'], $valueObject->name());
+        Assert::assertSame($values['description'], $valueObject->description());
+        Assert::assertSame($values['amount'], $valueObject->amount());
     }
 
     /**
      * @return iterable<array-key, array{0: array}>
      */
-    public function getValidPayloadExamples(): iterable
+    public function getValidValueExamples(): iterable
     {
+        yield [ValueObjectPayloadExample::transaction()];
+
         yield [
             [
-                'date' => 'some value',
-                'name' => 'some value',
-                'description' => 'some value',
-                'amount' => 2.00,
+                'date' => 'some',
+                'name' => '',
+                'description' => '',
+                'amount' => 1.0,
             ],
         ];
     }
 
     /**
-     * @dataProvider getInvalidPayloadExamples
+     * @dataProvider getInvalidValueExamples
      */
-    public function test_it_throws_with_invalid_payload(array $payload, Exception $expectedException): void
+    public function test_it_throws_with_invalid_payload(array $values, Exception $expectedException): void
     {
         $this->expectExceptionObject($expectedException);
 
-        Transaction::fromPayload($payload);
+        Transaction::fromArray($values);
     }
 
     /**
      * @return iterable<array-key, array{0: array, 1: Exception}>
      */
-    public function getInvalidPayloadExamples(): iterable
+    public function getInvalidValueExamples(): iterable
     {
         $perfectValues = [
-            'date' => 'some value',
-            'name' => 'some value',
-            'description' => 'some value',
-            'amount' => 2.00,
+            'date' => 'some',
+            'name' => '',
+            'description' => '',
+            'amount' => 1.0,
         ];
 
         yield from ValueObjectPayloadAssertion::notEmptyString($perfectValues, 'date');
